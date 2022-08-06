@@ -13,7 +13,7 @@ namespace YSI.FeudalSword.Web.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Замерзает всё", "Дубак", "Холодно", "Прохладно", "Свежо", "Тепло", "Жарковато", "Жара", "Пекло", "Ад"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;

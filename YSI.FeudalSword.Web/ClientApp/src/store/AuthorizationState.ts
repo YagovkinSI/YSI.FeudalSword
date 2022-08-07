@@ -2,6 +2,7 @@ import { Action, Reducer } from "redux";
 import { AppThunkAction } from ".";
 import { ICurrentUser } from "../models/ICurrentUser";
 import { ICheckAuthResponse } from "../models/ICheckAuthResponse";
+import axios from "axios";
 
 export interface AuthorizationState {
     isLoading: boolean;
@@ -28,20 +29,22 @@ interface ReceiveGetCurrentUserAction {
 
 type KnownAction = RequestGetCurrentUserAction | ReceiveGetCurrentUserAction;
 
-const getCurrentUser = (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+const getCurrentUser = (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
     const appState = getState();
-    if (appState && 
+    if (!(appState && 
         (appState.authorization == undefined ||
         !appState.authorization.isLoading && 
-        !appState.authorization.isChecked)) {
-        fetch(`User/currentUser`)
-            .then(response => response.json() as Promise<ICheckAuthResponse>)
-            .then(data => {
-                dispatch({ type: 'RECEIVE_GET_CURRENT_USER', сheckCheckAuthResponse: data });
-            });
+        !appState.authorization.isChecked)))
+        return;
 
-        dispatch({ type: 'REQUEST_GET_CURRENT_USER' });
-    }
+    dispatch({ type: 'REQUEST_GET_CURRENT_USER' });
+    await axios.get('User/currentUser')
+        .then(response => 
+            dispatch({ 
+                type: 'RECEIVE_GET_CURRENT_USER', 
+                сheckCheckAuthResponse: response.data 
+            })
+        );
 }
 
 export const actionCreators = { getCurrentUser };

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Action, Reducer } from 'redux';
 import { AppThunkAction } from './';
 
@@ -41,18 +42,25 @@ type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => async (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         const appState = getState();
-        if (appState && appState.weatherForecasts && startDateIndex !== appState.weatherForecasts.startDateIndex) {
-            fetch(`weatherforecast`)
-                .then(response => response.json() as Promise<WeatherForecast[]>)
-                .then(data => {
-                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
+        if (!(appState && 
+            appState.weatherForecasts && 
+            startDateIndex !== appState.weatherForecasts.startDateIndex))
+            return;
+            
+        dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
+        await axios.get(`weatherforecast`)
+            .then(response => {
+                dispatch({ 
+                    type: 'RECEIVE_WEATHER_FORECASTS', 
+                    startDateIndex: startDateIndex, 
+                    forecasts: response.data 
                 });
+            });
 
-            dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
-        }
+        
     }
 };
 

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using YSI.FeudalSword.Web.ApiModels;
 using YSI.FeudalSword.Web.Database;
 using YSI.FeudalSword.Web.Database.Models;
+using YSI.FeudalSword.Web.Helpers;
 
 namespace YSI.FeudalSword.Web.Controllers
 {
@@ -39,18 +40,18 @@ namespace YSI.FeudalSword.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = CreateNewUser(model.UserName); 
+                    var user = CreateNewUser(model.UserName);
                     var result = await _userManager.CreateAsync(user, model.Password);
                     if (!result.Succeeded)
-                        return BadRequest(String.Join(". ", result.Errors.Select(e => e.Description)));
+                        return BadRequest(string.Join(". ", result.Errors.Select(e => e.Description)));
 
                     _logger.LogInformation($"Created user: id - {user.Id}, userName - {user.UserName}");
-                    await _signInManager.SignInAsync(user, true);
+                    await _signInManager.SignInAsync(_context, user, true);
                     return new CurrentUserApiModel(user);
                 }
 
                 var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
-                return BadRequest(String.Join(". ", stateErrors));
+                return BadRequest(string.Join(". ", stateErrors));
             }
             catch (Exception ex)
             {
@@ -77,18 +78,18 @@ namespace YSI.FeudalSword.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var result =
-                        await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
-                    if (!result.Succeeded)
+                    var user =
+                        await _signInManager.PasswordSignInAsync(
+                            _context, model.UserName, model.Password, true, false);
+                    if (user == null)
                         return BadRequest("Неправильный логин и(или) пароль");
 
-                    var user = await _context.Users.SingleAsync(u => u.UserName == model.UserName);
                     _logger.LogInformation($"Logined user: id - {user.Id}, userName - {user.UserName}");
                     return new CurrentUserApiModel(user);
                 }
 
                 var stateErrors = ModelState.SelectMany(s => s.Value.Errors.Select(e => e.ErrorMessage));
-                return BadRequest(String.Join(". ", stateErrors));
+                return BadRequest(string.Join(". ", stateErrors));
             }
             catch (Exception ex)
             {
@@ -117,7 +118,7 @@ namespace YSI.FeudalSword.Web.Controllers
         {
             try
             {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
+                var user = await _userManager.GetUserAsync(_context, HttpContext.User);
                 if (user == null)
                     return BadRequest("Пользователь не авторизован");
 

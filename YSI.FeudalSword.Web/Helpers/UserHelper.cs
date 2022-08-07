@@ -36,7 +36,7 @@ namespace YSI.FeudalSword.Web.Helpers
         {
             var user = await userManager.GetUserAsync(claimsPrincipal);
             if (user == null)
-                throw new Exception("Пользователь не авторизован");
+                return null;
 
             await UpdateLastActivity(context, user);
             return user;

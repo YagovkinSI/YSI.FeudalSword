@@ -114,16 +114,16 @@ namespace YSI.FeudalSword.Web.Controllers
 
         [HttpGet]
         [Route("currentUser")]
-        public async Task<ActionResult<CurrentUserApiModel>> GetCurrentUser()
+        public async Task<ActionResult<CheckAuthResponse>> GetCurrentUser()
         {
             try
             {
                 var user = await _userManager.GetUserAsync(_context, HttpContext.User);
                 if (user == null)
-                    return BadRequest("Пользователь не авторизован");
+                    return new CheckAuthResponse(null);
 
                 _logger.LogInformation($"Got current user: user: id - {user.Id}, userName - {user.UserName}");
-                return new CurrentUserApiModel(user);
+                return new CheckAuthResponse(user);
             }
             catch (Exception ex)
             {

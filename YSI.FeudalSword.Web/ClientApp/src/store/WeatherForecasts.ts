@@ -59,8 +59,6 @@ export const actionCreators = {
                     forecasts: response.data 
                 });
             });
-
-        
     }
 };
 

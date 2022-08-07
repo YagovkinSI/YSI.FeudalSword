@@ -37,6 +37,10 @@ class TestRequest extends React.PureComponent<TestRequestProps> {
       return (
         <div>Загрузка...</div>
       )
+    else if (this.props.error != '')
+      return (
+        <div>ОШИБКА! {this.props.error}</div>
+      )
     else if (this.props.user == undefined)
       return (
         <div>Пользователь не авторизован</div>

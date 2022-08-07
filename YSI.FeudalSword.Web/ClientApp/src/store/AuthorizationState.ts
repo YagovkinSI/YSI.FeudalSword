@@ -3,6 +3,7 @@ import { AppThunkAction } from ".";
 import { ICurrentUser } from "../models/ICurrentUser";
 import { ICheckAuthResponse } from "../models/ICheckAuthResponse";
 import axios from "axios";
+import GetErrorMessage from "../helpers/ServerErrorParserHepler";
 
 export interface AuthorizationState {
     isLoading: boolean;
@@ -27,7 +28,12 @@ interface ReceiveGetCurrentUserAction {
     сheckCheckAuthResponse: ICheckAuthResponse;
 }
 
-type KnownAction = RequestGetCurrentUserAction | ReceiveGetCurrentUserAction;
+interface ErrorGetCurrentUserAction {
+    type: 'ERROR_GET_CURRENT_USER';
+    error: string;
+}
+
+type KnownAction = RequestGetCurrentUserAction | ReceiveGetCurrentUserAction | ErrorGetCurrentUserAction;
 
 const getCurrentUser = (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
     const appState = getState();
@@ -38,13 +44,22 @@ const getCurrentUser = (): AppThunkAction<KnownAction> => async (dispatch, getSt
         return;
 
     dispatch({ type: 'REQUEST_GET_CURRENT_USER' });
+    console.log('User/currentUser');
     await axios.get('User/currentUser')
-        .then(response => 
+        .then(response => {
+            console.log('response User/currentUser', response);
             dispatch({ 
                 type: 'RECEIVE_GET_CURRENT_USER', 
                 сheckCheckAuthResponse: response.data 
+            })}
+        )
+        .catch(error => {
+            console.log('error User/currentUser', error);
+            dispatch({
+                type: 'ERROR_GET_CURRENT_USER', 
+                error: GetErrorMessage(error)
             })
-        );
+        });
 }
 
 export const actionCreators = { getCurrentUser };
@@ -62,6 +77,7 @@ export const reducer: Reducer<AuthorizationState> = (
         case 'REQUEST_GET_CURRENT_USER':
             return {
                 ...state, 
+                error: '',
                 isLoading: true
             };
         case 'RECEIVE_GET_CURRENT_USER':
@@ -69,9 +85,16 @@ export const reducer: Reducer<AuthorizationState> = (
                 ...state, 
                 isLoading: false,
                 isChecked: true,
+                error: '',
                 user: action.сheckCheckAuthResponse.user
             };
-            break;
+        case 'ERROR_GET_CURRENT_USER':
+            return {
+                ...state,
+                isLoading: false,
+                isChecked: true,
+                error: action.error
+            }
     }
     
     return state;

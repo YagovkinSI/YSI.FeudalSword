@@ -89,7 +89,61 @@ const register = (userName: string, password: string, passwordConfirm: string)
         });
 }
 
-export const actionCreators = { getCurrentUser, register };
+const login = (userName: string, password: string): AppThunkAction<KnownAction> => 
+async (dispatch, getState) => {
+    const appState = getState();
+    if (!appState || 
+        appState.authorization == undefined ||
+        appState.authorization.isLoading)
+        return;
+
+    dispatch({ type: 'LOADING_ACTION' });
+    console.log('User/login');
+    await axios.post('User/login', { userName, password })
+        .then(response => {
+            console.log('response User/login', response);
+            dispatch({ 
+                type: 'RECEIVE_CURRENT_USER_ACTION', 
+                user: response.data 
+            })}
+        )
+        .catch(error => {
+            console.log('error User/login', error);
+            dispatch({
+                type: 'RECEIVE_ERROR_ACTION', 
+                error: GetErrorMessage(error)
+            })
+        });
+}
+
+const logout = (): AppThunkAction<KnownAction> =>
+async (dispatch, getState) => {
+    const appState = getState();
+    if (!appState || 
+        appState.authorization == undefined ||
+        appState.authorization.isLoading)
+        return;
+
+    dispatch({ type: 'LOADING_ACTION' });
+    console.log('User/logout');
+    await axios.post('User/logout')
+        .then(response => {
+            console.log('response User/logout', response);
+            dispatch({ 
+                type: 'RECEIVE_CURRENT_USER_ACTION', 
+                user: undefined
+            })}
+        )
+        .catch(error => {
+            console.log('error User/logout', error);
+            dispatch({
+                type: 'RECEIVE_ERROR_ACTION', 
+                error: GetErrorMessage(error)
+            })
+        });
+}
+
+export const actionCreators = { getCurrentUser, register, login, logout };
 
 export const reducer: Reducer<AuthorizationState> = (
     state: AuthorizationState | undefined, 

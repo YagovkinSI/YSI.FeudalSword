@@ -15,7 +15,7 @@ export interface AuthorizationState {
 const unloadedState: AuthorizationState = { 
     error: '',
     isLoading: false,
-    user: {} as ICurrentUser,
+    user: undefined,
     isChecked: false
 };
 

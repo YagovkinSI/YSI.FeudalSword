@@ -22,9 +22,6 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
         ? ''
         : appState.authorization.user.userName;
     
-    console.log(appState);
-    console.log(appState.authorization?.user == undefined);
-
     const loadinMenu = (
         <Fragment>
             <NavItem>

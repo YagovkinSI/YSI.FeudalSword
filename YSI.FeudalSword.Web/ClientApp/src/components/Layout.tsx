@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Container } from 'reactstrap';
+import ErrorField from './ErrorField';
 import NavMenu from './NavMenu';
 
 export interface LayoutProps {
@@ -10,6 +11,7 @@ const Layout : React.FC<LayoutProps> = ({children}) => {
     return (
         <React.Fragment>
             <NavMenu />
+            <ErrorField />
             <Container>
                 {children}
             </Container>

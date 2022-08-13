@@ -19,50 +19,77 @@ const unloadedState: AuthorizationState = {
     isChecked: false
 };
 
-interface RequestGetCurrentUserAction {
-    type: 'REQUEST_GET_CURRENT_USER';
+interface LoadingAction {
+    type: 'LOADING_ACTION';
 }
 
-interface ReceiveGetCurrentUserAction {
-    type: 'RECEIVE_GET_CURRENT_USER';
-    сheckCheckAuthResponse: ICheckAuthResponse;
+interface ReceiveCurrentUserAction {
+    type: 'RECEIVE_CURRENT_USER_ACTION';
+    user: ICurrentUser | undefined;
 }
 
-interface ErrorGetCurrentUserAction {
-    type: 'ERROR_GET_CURRENT_USER';
+interface ReceiveErrorAction {
+    type: 'RECEIVE_ERROR_ACTION';
     error: string;
 }
 
-type KnownAction = RequestGetCurrentUserAction | ReceiveGetCurrentUserAction | ErrorGetCurrentUserAction;
+type KnownAction = LoadingAction | ReceiveCurrentUserAction | ReceiveErrorAction;
 
 const getCurrentUser = (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
     const appState = getState();
-    if (!(appState && 
-        (appState.authorization == undefined ||
-        !appState.authorization.isLoading && 
-        !appState.authorization.isChecked)))
+    if (!appState || 
+        appState.authorization == undefined ||
+        appState.authorization.isLoading || 
+        appState.authorization.isChecked)
         return;
 
-    dispatch({ type: 'REQUEST_GET_CURRENT_USER' });
+    dispatch({ type: 'LOADING_ACTION' });
     console.log('User/currentUser');
     await axios.get('User/currentUser')
         .then(response => {
             console.log('response User/currentUser', response);
             dispatch({ 
-                type: 'RECEIVE_GET_CURRENT_USER', 
-                сheckCheckAuthResponse: response.data 
+                type: 'RECEIVE_CURRENT_USER_ACTION', 
+                user: response.data.user 
             })}
         )
         .catch(error => {
             console.log('error User/currentUser', error);
             dispatch({
-                type: 'ERROR_GET_CURRENT_USER', 
+                type: 'RECEIVE_ERROR_ACTION', 
                 error: GetErrorMessage(error)
             })
         });
 }
 
-export const actionCreators = { getCurrentUser };
+const register = (userName: string, password: string, passwordConfirm: string)
+: AppThunkAction<KnownAction> => async (dispatch, getState) => {
+    const appState = getState();
+    if (!appState || 
+        appState.authorization == undefined ||
+        appState.authorization.isLoading)
+        return;
+
+    dispatch({ type: 'LOADING_ACTION' });
+    console.log('User/register');
+    await axios.post('User/register', { userName, password, passwordConfirm })
+        .then(response => {
+            console.log('response User/register', response);
+            dispatch({ 
+                type: 'RECEIVE_CURRENT_USER_ACTION', 
+                user: response.data 
+            })}
+        )
+        .catch(error => {
+            console.log('error User/register', error);
+            dispatch({
+                type: 'RECEIVE_ERROR_ACTION', 
+                error: GetErrorMessage(error)
+            })
+        });
+}
+
+export const actionCreators = { getCurrentUser, register };
 
 export const reducer: Reducer<AuthorizationState> = (
     state: AuthorizationState | undefined, 
@@ -74,21 +101,21 @@ export const reducer: Reducer<AuthorizationState> = (
 
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'REQUEST_GET_CURRENT_USER':
+        case 'LOADING_ACTION':
             return {
                 ...state, 
                 error: '',
                 isLoading: true
             };
-        case 'RECEIVE_GET_CURRENT_USER':
+        case 'RECEIVE_CURRENT_USER_ACTION':
             return {
                 ...state, 
                 isLoading: false,
                 isChecked: true,
                 error: '',
-                user: action.сheckCheckAuthResponse.user
+                user: action.user
             };
-        case 'ERROR_GET_CURRENT_USER':
+        case 'RECEIVE_ERROR_ACTION':
             return {
                 ...state,
                 isLoading: false,

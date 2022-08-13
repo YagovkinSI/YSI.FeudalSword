@@ -118,6 +118,8 @@ namespace YSI.FeudalSword.Web.Controllers
         {
             try
             {
+                throw new Exception("Текстовая ошибка");
+
                 var user = await _userManager.GetUserAsync(_context, HttpContext.User);
                 if (user == null)
                     return new CheckAuthResponse(null);

@@ -2,10 +2,15 @@ import * as React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
+import LoginMenu from './LoginMenu';
 
 const NavMenu : React.FC = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
+    const resetOpen = () => {
+        setIsOpen(false)
+    }
+    
     return (
         <header>
             <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
@@ -26,6 +31,9 @@ const NavMenu : React.FC = () => {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/test">Тест запроса</NavLink>
                             </NavItem>
+                            <LoginMenu
+                                resetOpen={resetOpen}>                                
+                            </LoginMenu>
                         </ul>
                     </Collapse>
                 </Container>

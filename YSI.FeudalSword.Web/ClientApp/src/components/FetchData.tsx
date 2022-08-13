@@ -1,45 +1,23 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { ApplicationState } from '../store';
 import * as WeatherForecastsStore from '../store/WeatherForecasts';
 
-// At runtime, Redux will merge together...
-type WeatherForecastProps =
-  WeatherForecastsStore.WeatherForecastsState // ... state we've requested from the Redux store
-  & typeof WeatherForecastsStore.actionCreators // ... plus action creators we've requested
-  & RouteComponentProps<{ startDateIndex: string }>; // ... plus incoming routing parameters
+const FetchData :  React.FC = () => {  
+  const dispatch = useDispatch(); 
+  const appState = useSelector(state => state as ApplicationState);
 
+  const pathName = useLocation().pathname;
+  let startDateIndexString = pathName.replace('/fetch-data', '').replace('/', '');
+  const startDateIndex = parseInt(startDateIndexString, 10) || 0;
 
-class FetchData extends React.PureComponent<WeatherForecastProps> {
-  // This method is called when the component is first added to the document
-  public componentDidMount() {
-    this.ensureDataFetched();
-  }
+  useEffect(() => {
+    dispatch(WeatherForecastsStore.actionCreators.requestWeatherForecasts(startDateIndex))
+  });
 
-  // This method is called when the route parameters change
-  public componentDidUpdate() {
-    this.ensureDataFetched();
-  }
-
-  public render() {
-    return (
-      <React.Fragment>
-        <h1 id="tabelLabel">Тест загрузки данных с сервера</h1>
-        <p>Этот компонент демонстрирует получение данных с сервера и работу с параметрами URL.</p>
-        {this.renderForecastsTable()}
-        {this.renderPagination()}
-      </React.Fragment>
-    );
-  }
-
-  private ensureDataFetched() {
-    const startDateIndex = parseInt(this.props.match.params.startDateIndex, 10) || 0;
-    this.props.requestWeatherForecasts(startDateIndex);
-  }
-
-  private renderForecastsTable() {
+  const renderForecastsTable = () => {
     return (
       <table className='table table-striped' aria-labelledby="tabelLabel">
         <thead>
@@ -51,31 +29,44 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
           </tr>
         </thead>
         <tbody>
-          {this.props.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
+          { 
+            appState.weatherForecasts != undefined
+            ?
+            appState.weatherForecasts.forecasts.map((forecast: WeatherForecastsStore.WeatherForecast) =>
+              <tr key={forecast.date}>
+                <td>{forecast.date}</td>
+                <td>{forecast.temperatureC}</td>
+                <td>{forecast.temperatureF}</td>
+                <td>{forecast.summary}</td>
+              </tr>)
+            :
+            <div></div>
+          }
         </tbody>
       </table>
     );
   }
 
-  private renderPagination() {
-    const prevStartDateIndex = (this.props.startDateIndex || 0) - 5;
-    const nextStartDateIndex = (this.props.startDateIndex || 0) + 5;
-
+  const renderPagination = () => {
     return (
       <div className="d-flex justify-content-between">
-        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${prevStartDateIndex}`}>Назад</Link>
-        {this.props.isLoading && <span>Загрузка...</span>}
-        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${nextStartDateIndex}`}>Вперёд</Link>
+        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${startDateIndex - 5}`}>Назад</Link>
+        {(appState.weatherForecasts == undefined || appState.weatherForecasts.isLoading) && 
+          <span>Загрузка...</span>
+        }
+        <Link className='btn btn-outline-secondary btn-sm' to={`/fetch-data/${startDateIndex + 5}`}>Вперёд</Link>
       </div>
     );
-  }
+  }  
+
+  return (  
+    <React.Fragment>
+      <h1 id="tabelLabel">Тест загрузки данных с сервера</h1>
+      <p>Этот компонент демонстрирует получение данных с сервера и работу с параметрами URL.</p>
+      {renderForecastsTable()}
+      {renderPagination()}
+    </React.Fragment>
+  );
 }
 
 export default connect(

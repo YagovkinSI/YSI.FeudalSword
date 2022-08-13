@@ -1,59 +1,45 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../store';
 import * as TestRequestStore from '../store/AuthorizationState';
 
-// At runtime, Redux will merge together...
-type TestRequestProps =
-TestRequestStore.AuthorizationState // ... state we've requested from the Redux store
-  & typeof TestRequestStore.actionCreators // ... plus action creators we've requested
+const TestRequest : React.FC = () => {
+  const dispatch = useDispatch(); 
+  const appState = useSelector(state => state as ApplicationState);
+  
+  React.useEffect(() => {
+    dispatch(TestRequestStore.actionCreators.getCurrentUser())
+  });
 
-class TestRequest extends React.PureComponent<TestRequestProps> {
-  // This method is called when the component is first added to the document
-  public componentDidMount() {
-    this.ensureDataFetched();
-  }
-
-  // This method is called when the route parameters change
-  public componentDidUpdate() {
-    this.ensureDataFetched();
-  }
-
-  public render() {
-    return (
-      <React.Fragment>
-        <h1 id="tabelLabel">Тестирование запроса текущего пользователя</h1>
-        {this.renderCurrentUser()}
-      </React.Fragment>
-    );
-  }
-
-  private ensureDataFetched() {
-    this.props.getCurrentUser();
-  }
-
-  private renderCurrentUser() {
-    if (this.props.isLoading)
+  const renderCurrentUser = () => {
+    if (appState.authorization == undefined || appState.authorization.isLoading)
       return (
         <div>Загрузка...</div>
       )
-    else if (this.props.error != '')
+    else if (appState.authorization != undefined && appState.authorization.error != '')
       return (
-        <div>ОШИБКА! {this.props.error}</div>
+        <div>ОШИБКА! {appState.authorization.error}</div>
       )
-    else if (this.props.user == undefined)
+    else if (appState.authorization != undefined && appState.authorization.user != undefined)
+      return (
+        <div>
+          <p>ID - {appState.authorization.user.id}</p>
+          <p>Имя - {appState.authorization.user.userName}</p>
+          <p>Аккаунт созда - {appState.authorization.user.created}</p>
+        </div>
+      );
+    else
       return (
         <div>Пользователь не авторизован</div>
       )
-    else
-      return (
-        <div>
-          <p>ID - {this.props.user.id}</p>
-          <p>Имя - {this.props.user.userName}</p>
-          <p>Аккаунт созда - {this.props.user.created}</p>
-        </div>
-      );
   }
+
+  return (
+    <React.Fragment>
+      <h1 id="tabelLabel">Тестирование запроса текущего пользователя</h1>
+      {renderCurrentUser()}
+    </React.Fragment>
+  );
 }
 
 export default connect(

@@ -13,6 +13,7 @@ import { ApplicationState } from './store';
 import EmptyPage from './components/EmptyPage';
 import LoginRegister from './components/LoginRegister';
 import Logout from './components/Logout';
+import Profile from './components/Profile';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -35,7 +36,7 @@ const App: React.FC = () => {
                     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
                     <Route path='/test' component={TestRequest} />
                     <Route path='/logout' component={Logout} />
-                    <Route path='/profile' component={EmptyPage} />
+                    <Route path='/profile' component={Profile} />
                     <Redirect to='/' />
                 </Switch>
             </Layout>

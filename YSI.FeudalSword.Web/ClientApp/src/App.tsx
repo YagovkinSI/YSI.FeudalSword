@@ -13,6 +13,7 @@ import { ApplicationState } from './store';
 import LoginRegister from './components/pages/LoginRegister';
 import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
+import WorldMap from './components/pages/WorldMap';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -36,6 +37,7 @@ const App: React.FC = () => {
                     <Route path='/test' component={TestRequest} />
                     <Route path='/logout' component={Logout} />
                     <Route path='/profile' component={Profile} />
+                    <Route path='/map' component={WorldMap} />
                     <Redirect to='/' />
                 </Switch>
             </Layout>
@@ -50,6 +52,7 @@ const App: React.FC = () => {
                     <Route path='/test' component={TestRequest} />
                     <Route path='/register' component={LoginRegister} />
                     <Route path='/login' component={LoginRegister} />
+                    <Route path='/map' component={WorldMap} />
                     <Redirect to='/' />
                 </Switch>
             </Layout>

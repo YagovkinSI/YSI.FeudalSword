@@ -22,6 +22,9 @@ const NavMenu : React.FC = () => {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/">Главная</NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} className="text-dark" to="/map">Карта</NavLink>
+                            </NavItem>
                             <LoginMenu
                                 resetOpen={resetOpen}>                                
                             </LoginMenu>

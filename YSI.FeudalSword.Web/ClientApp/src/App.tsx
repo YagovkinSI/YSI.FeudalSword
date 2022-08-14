@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as Authorization from './store/Authorization'
 import { ApplicationState } from './store';
 import EmptyPage from './components/EmptyPage';
+import LoginRegister from './components/LoginRegister';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -46,8 +47,8 @@ const App: React.FC = () => {
                     <Route path='/counter' component={Counter} />
                     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
                     <Route path='/test' component={TestRequest} />
-                    <Route path='/register' component={EmptyPage} />
-                    <Route path='/login' component={EmptyPage} />
+                    <Route path='/register' component={LoginRegister} />
+                    <Route path='/login' component={LoginRegister} />
                     <Redirect to='/' />
                 </Switch>
             </Layout>

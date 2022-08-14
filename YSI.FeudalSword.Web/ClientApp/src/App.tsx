@@ -12,6 +12,7 @@ import * as Authorization from './store/Authorization'
 import { ApplicationState } from './store';
 import EmptyPage from './components/EmptyPage';
 import LoginRegister from './components/LoginRegister';
+import Logout from './components/Logout';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -33,7 +34,7 @@ const App: React.FC = () => {
                     <Route path='/counter' component={Counter} />
                     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
                     <Route path='/test' component={TestRequest} />
-                    <Route path='/logout' component={EmptyPage} />
+                    <Route path='/logout' component={Logout} />
                     <Route path='/profile' component={EmptyPage} />
                     <Redirect to='/' />
                 </Switch>

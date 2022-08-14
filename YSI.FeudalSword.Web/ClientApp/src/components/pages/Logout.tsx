@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import * as Authorization from '../store/Authorization'
+import * as Authorization from '../../store/Authorization'
 
 const Logout: React.FC = () => {    
     const dispatch = useDispatch(); 

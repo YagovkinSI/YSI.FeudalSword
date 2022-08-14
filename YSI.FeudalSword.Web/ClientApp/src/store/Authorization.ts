@@ -1,7 +1,6 @@
 import { Action, Reducer } from "redux";
 import { AppThunkAction } from ".";
 import { ICurrentUser } from "../models/ICurrentUser";
-import { ICheckAuthResponse } from "../models/ICheckAuthResponse";
 import axios from "axios";
 import GetErrorMessage from "../helpers/ServerErrorParserHepler";
 

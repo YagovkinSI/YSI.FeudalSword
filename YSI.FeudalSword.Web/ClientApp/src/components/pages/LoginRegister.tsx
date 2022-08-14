@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Form, Spinner } from 'react-bootstrap';
-import * as Authorization from '../store/Authorization'
+import * as Authorization from '../../store/Authorization'
 import { useState } from 'react';
 import { useLocation } from 'react-router';
-import { ApplicationState } from '../store';
+import { ApplicationState } from '../../store';
 
 const LoginRegister: React.FC = () => {
     const appState = useSelector(state => state as ApplicationState);
-    const isLoading = appState.authorization == undefined 
-        ? true
-        : appState.authorization.isLoading;
-
     const dispatch = useDispatch();
 
     const [login, setLogin] = useState('');
@@ -22,6 +18,9 @@ const LoginRegister: React.FC = () => {
     const [passwordError, setPasswordError] = useState('');    
     const [passwordConfirmError, setPasswordConfirmError] = useState('');
 
+    const isLoading = appState.authorization == undefined 
+        ? true
+        : appState.authorization.isLoading;
     const isLogin = useLocation().pathname === "/login"
 
     const submit = (event: React.FormEvent<EventTarget>) => {

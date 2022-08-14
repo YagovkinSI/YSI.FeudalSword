@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { ApplicationState } from '../store';
-import * as WeatherForecastsStore from '../store/WeatherForecasts';
+import { ApplicationState } from '../../store';
+import * as WeatherForecastsStore from '../../store/WeatherForecasts';
 
 const FetchData :  React.FC = () => {  
   const dispatch = useDispatch(); 

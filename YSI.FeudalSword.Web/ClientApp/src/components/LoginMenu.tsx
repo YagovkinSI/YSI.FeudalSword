@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Fragment } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { NavItem, NavLink } from 'reactstrap';
@@ -11,6 +12,7 @@ export interface LoginMenuProps {
 
 const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {     
     const appState = useSelector(state => state as ApplicationState);
+
     const isLoading = appState.authorization == undefined 
         ? true
         : appState.authorization.isLoading;
@@ -18,6 +20,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
     const isAuthorized = appState.authorization == undefined 
         ? false
         : appState.authorization.user != undefined;
+        
     const userName = appState.authorization == undefined || appState.authorization.user == undefined
         ? ''
         : appState.authorization.user.userName;
@@ -26,6 +29,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
         <Fragment>
             <NavItem>
                 <NavLink className="text-dark">
+                    <Spinner animation="border" role="status" size="sm"/>
                     Загрузка...
                 </NavLink>
             </NavItem>

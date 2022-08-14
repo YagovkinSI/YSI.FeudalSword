@@ -22,15 +22,6 @@ const NavMenu : React.FC = () => {
                             <NavItem>
                                 <NavLink tag={Link} className="text-dark" to="/">Главная</NavLink>
                             </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/counter">Счётчик</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/fetch-data">Загрузка данных</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={Link} className="text-dark" to="/test">Тест запроса</NavLink>
-                            </NavItem>
                             <LoginMenu
                                 resetOpen={resetOpen}>                                
                             </LoginMenu>

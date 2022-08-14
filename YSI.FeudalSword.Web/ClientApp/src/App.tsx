@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
+import Home from './components/pages/Home';
+import Counter from './components/pages/Counter';
+import FetchData from './components/pages/FetchData';
 
 import './custom.css'
-import TestRequest from './components/TestRequest';
+import TestRequest from './components/pages/TestRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Authorization from './store/Authorization'
 import { ApplicationState } from './store';
-import EmptyPage from './components/EmptyPage';
-import LoginRegister from './components/LoginRegister';
-import Logout from './components/Logout';
-import Profile from './components/Profile';
+import LoginRegister from './components/pages/LoginRegister';
+import Logout from './components/pages/Logout';
+import Profile from './components/pages/Profile';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 

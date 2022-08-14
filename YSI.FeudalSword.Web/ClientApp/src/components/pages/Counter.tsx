@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../store';
-import * as CounterStore from '../store/Counter';
+import { ApplicationState } from '../../store';
+import * as CounterStore from '../../store/Counter';
 
 const Counter :  React.FC = () => {
     const [count, setCount] = useState(0);

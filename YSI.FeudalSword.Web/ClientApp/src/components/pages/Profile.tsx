@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../store';
-import * as TestRequestStore from '../store/Authorization';
+import { ApplicationState } from '../../store';
+import * as TestRequestStore from '../../store/Authorization';
 
 const Profile : React.FC = () => {
     const appState = useSelector(state => state as ApplicationState);

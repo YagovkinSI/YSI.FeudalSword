@@ -1,5 +1,5 @@
 import { Action, Reducer } from "redux";
-import { AppThunkAction } from ".";
+import { ApplicationState, AppThunkAction } from ".";
 import axios from "axios";
 import GetErrorMessage from "../helpers/ServerErrorParserHepler";
 import { ICharacter } from "../models/ICharacter";
@@ -35,13 +35,18 @@ interface ErrorAction {
 
 type KnownAction = LoadingAction | ReceiveAction | ErrorAction;
 
+const isValidRequestGetByTitle =(titleId: number, appState : ApplicationState) => {
+    return titleId > 0 &&
+        appState != undefined && 
+        appState.characters != undefined &&
+        (!appState.characters.isLoading || appState.characters.loadingTitle != titleId) &&
+        !appState.characters.characters
+            .find(c => c.titles.find(t => t.id == titleId))
+}
+
 const getByTitle = (titleId: number): AppThunkAction<KnownAction> => async (dispatch, getState) => {
     const appState = getState();
-    if (!appState || 
-        appState.characters == undefined ||
-        (appState.characters.isLoading && appState.characters.loadingTitle == titleId) ||
-        appState.characters.characters
-            .find(c => c.titles.find(t => t.id == titleId)))
+    if (!isValidRequestGetByTitle(titleId, appState) || appState.characters == undefined)
         return;
     let characters = appState.characters.characters;
 

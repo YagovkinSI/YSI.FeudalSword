@@ -34,7 +34,7 @@ const App: React.FC = () => {
                     <Route exact path='/' component={Home} />
                     <Route path='/counter' component={Counter} />
                     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
-                    <Route path='/test' component={TestRequest} />
+                    <Route path='/test/:index?' component={TestRequest} />
                     <Route path='/logout' component={Logout} />
                     <Route path='/profile' component={Profile} />
                     <Route path='/map' component={WorldMap} />
@@ -49,7 +49,7 @@ const App: React.FC = () => {
                     <Route exact path='/' component={Home} />
                     <Route path='/counter' component={Counter} />
                     <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
-                    <Route path='/test' component={TestRequest} />
+                    <Route path='/test/:index?' component={TestRequest} />
                     <Route path='/register' component={LoginRegister} />
                     <Route path='/login' component={LoginRegister} />
                     <Route path='/map' component={WorldMap} />

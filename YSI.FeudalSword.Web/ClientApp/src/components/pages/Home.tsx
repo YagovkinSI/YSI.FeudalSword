@@ -30,7 +30,7 @@ const Home = () => (
     <ul>
       <li><NavLink tag={Link} className="text-dark" to="/counter">Счётчик - простой пример компонента React</NavLink></li>
       <li><NavLink tag={Link} className="text-dark" to="/fetch-data">Загрузка данных - пример получения данных с сервера и работа с параметрами URL</NavLink></li>
-      <li><NavLink tag={Link} className="text-dark" to="/test">Запрос авторизации - данные запроса авториацзии</NavLink></li>
+      <li><NavLink tag={Link} className="text-dark" to="/test">Тестовый запрос - тестирование запроса к серверу</NavLink></li>
     </ul>
     
   </div>

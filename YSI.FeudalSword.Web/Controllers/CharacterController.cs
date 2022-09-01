@@ -60,6 +60,30 @@ namespace YSI.FeudalSword.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("getMyCharacter")]
+        public async Task<ActionResult<CheckMyCharacter>> GetMyCharacter()
+        {
+            try
+            {
+                var currentUser = await _userManager.GetUserAsync(_context, HttpContext.User);
+                if (currentUser == null)
+                    return NotFound("Не удалось определить текущего пользователя.");
+
+                var character = _context.Characters
+                    .Include(c => c.Dynasty)
+                    .Include(c => c.User)
+                    .Include(c => c.Titles)
+                    .FirstOrDefault(c => c.UserId == currentUser.Id);
+
+                return new CheckMyCharacter(character);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message.ToString());
+            }
+        }
+
         [HttpPost]
         [Route("takeСontrol")]
         public async Task<ActionResult<bool>> TakeСontrol(int characterId)

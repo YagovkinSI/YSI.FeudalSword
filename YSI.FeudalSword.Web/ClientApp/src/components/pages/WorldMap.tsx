@@ -9,6 +9,7 @@ import { useState } from 'react';
 import * as CharactersStore from '../../store/Characters';
 import { Card, Offcanvas, Spinner } from 'react-bootstrap';
 import { ICharacter } from '../../models/ICharacter';
+import CharacterCard from '../cards/CharacterCard';
 
 const WorldMap :  React.FC = () => {
     const dispatch = useDispatch(); 
@@ -33,27 +34,6 @@ const WorldMap :  React.FC = () => {
         handleShow();
     }
 
-    const renderCharacterCard = (character: ICharacter) => {
-        return (
-            <Card style={{ margin: 'auto' }}>
-                <Card.Body>
-                    <Card.Title>{character.name} {character.dynastyName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">
-                        Игрок - {character.userName == '' ? 'ОТСУТСТВУЕТ' : character.userName}
-                    </Card.Subtitle>
-                    <Card.Text>
-                        Во владении персонажа:
-                    </Card.Text>
-                    <ul>
-                    { character.titles.map(t => 
-                        <li key={t.id}>{t.name}</li>
-                    )}
-                    </ul>
-                </Card.Body>
-            </Card>
-        )
-    }
-
     const renderCharacter = (appState : ApplicationState, currentTitleId : number) => {
         if (currentTitleId == -1 || appState.characters == undefined)
             return (<></>)
@@ -71,7 +51,7 @@ const WorldMap :  React.FC = () => {
         else  
             return (                
                 <Offcanvas.Body>
-                    {renderCharacterCard(character)}                    
+                    <CharacterCard {...character}/>   
                 </Offcanvas.Body>
             )
     }

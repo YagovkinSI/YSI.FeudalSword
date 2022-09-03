@@ -84,9 +84,9 @@ namespace YSI.FeudalSword.Web.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("takeСontrol")]
-        public async Task<ActionResult<bool>> TakeСontrol(int characterId)
+        [HttpGet]
+        [Route("takeControl")]
+        public async Task<ActionResult<bool>> TakeControl(int characterId)
         {
             try
             {
@@ -104,6 +104,7 @@ namespace YSI.FeudalSword.Web.Controllers
                 character = _context.Characters
                     .Include(c => c.Dynasty)
                     .Include(c => c.User)
+                    .Include(c => c.Titles)
                     .Single(c => c.Id == characterId);
 
                 if (character.UserId != null)

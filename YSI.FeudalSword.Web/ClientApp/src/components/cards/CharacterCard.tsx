@@ -1,18 +1,55 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store';
-import * as Authorization from '../../store/Authorization';
-import { Card } from 'react-bootstrap';
+import * as Characters from '../../store/Characters';
+import { Button, Card } from 'react-bootstrap';
 import { ICharacter } from '../../models/ICharacter';
 
 const CharacterCard :  React.FC<ICharacter> = (character) => { 
+    const dispatch = useDispatch(); 
+
+    React.useEffect(() => {
+        dispatch(Characters.actionCreators.getMyCharacter())
+    });    
+    
+    const appState = useSelector(state => state as ApplicationState);
+    const userId = appState.authorization == undefined 
+        ? undefined
+        : appState.authorization.user == undefined
+            ? undefined
+            : appState.authorization.user.id;
+    console.log('userId', userId);
+    const characters = appState.characters == undefined 
+        ? undefined
+        : appState.characters.characters;   
+    console.log('characters', characters); 
+    const canTakeCharacter = characters == undefined || userId == undefined  
+        ? false
+        : appState.characters == undefined    
+            ? false
+            : !characters.some(c => c.userId == userId) 
+    console.log('canTakeCharacter', canTakeCharacter); 
+
+    const takeCharacter = () => {
+        dispatch(Characters.actionCreators.takeContol(character.id))
+    }
+
     return (
         <Card style={{ margin: 'auto' }}>
             <Card.Body>
                 <Card.Title>{character.name} {character.dynastyName}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                    Игрок - {character.userName == '' ? 'ОТСУТСТВУЕТ' : character.userName}
+                    Игрок - {character.userName != '' 
+                        ? character.userName
+                        : 'ОТСУТСТВУЕТ'}
                 </Card.Subtitle>
+                { character.userName == '' && canTakeCharacter
+                    ? <Button 
+                        onClick={takeCharacter}>
+                            ВЫБРАТЬ ЭТОГО ПЕРСОНАЖА
+                        </Button>
+                    : <></>
+                }
                 <Card.Text>
                     Во владении персонажа:
                 </Card.Text>
@@ -27,6 +64,6 @@ const CharacterCard :  React.FC<ICharacter> = (character) => {
 };
 
 export default connect(
-    (state: ApplicationState) => state.authorization,
-    Authorization.actionCreators
+    (state: ApplicationState) => state.characters,
+    Characters.actionCreators
 )(CharacterCard);

@@ -1,5 +1,5 @@
 export interface ICurrentUser {
-    id: number;
+    id: string;
     userName: string;
     created: Date;
     lastActivity: Date;

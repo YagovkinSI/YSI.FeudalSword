@@ -2,9 +2,14 @@ import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import * as Authorization from './Authorization';
 import * as Characters from './Characters';
+import * as LeftCanvasState from './UI/LeftCanvasState';
+import * as WorldMapState from './UI/WorldMapState';
 
 // The top-level state object
 export interface ApplicationState {
+    uiLeftCanvasState: LeftCanvasState.ILeftCanvasSate | undefined;
+    uiWorldMapState: WorldMapState.IWorldMapState | undefined;
+
     counter: Counter.CounterState | undefined;
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
     authorization: Authorization.AuthorizationState | undefined;
@@ -15,6 +20,9 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
+    uiLeftCanvasState: LeftCanvasState.reducer,
+    uiWorldMapState: WorldMapState.reducer,
+
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     authorization: Authorization.reducer,

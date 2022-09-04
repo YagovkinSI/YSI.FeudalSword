@@ -13,7 +13,7 @@ export interface CharactersState {
     error: string;
 }
 
-const unloadedState: CharactersState = { 
+export const unloadedState: CharactersState = { 
     isLoading: false,
     loadingTitle: [],
     loadingMy: 0,
@@ -84,8 +84,6 @@ const getByTitle = (titleId: number): AppThunkAction<KnownAction> => async (disp
                 loadingMy: undefined
             })
         });
-    
-        console.log(appState);
 }
 
 const getMyCharacter = (): AppThunkAction<KnownAction> => async (dispatch, getState) => {
@@ -126,8 +124,11 @@ const getMyCharacter = (): AppThunkAction<KnownAction> => async (dispatch, getSt
                 loadingMy: true
             })
         });
-    
-        console.log(appState);
+}
+
+const loadCharacter = (characterId : number) : AppThunkAction<KnownAction> => async (dispatch, getState) => {
+    const appState = getState();
+    //todo: в будущем нужно будет
 }
 
 const takeContol = (characterId : number): AppThunkAction<KnownAction> => async (dispatch, getState) => {
@@ -151,7 +152,6 @@ const takeContol = (characterId : number): AppThunkAction<KnownAction> => async 
         loadingMy: true
     });
     console.log('Character/takeControl');
-    console.log('characterId', characterId);
     await axios.get('Character/takeControl', { params: { characterId } })
         .then(response => {
             console.log('response Character/takeControl', response);
@@ -176,11 +176,9 @@ const takeContol = (characterId : number): AppThunkAction<KnownAction> => async 
                 loadingMy: true
             })
         });
-    
-        console.log(appState);
 }
 
-export const actionCreators = { getByTitle, getMyCharacter, takeContol };
+export const actionCreators = { getByTitle, getMyCharacter, takeContol, loadCharacter };
 
 export const reducer: Reducer<CharactersState> = (
     state: CharactersState | undefined, 

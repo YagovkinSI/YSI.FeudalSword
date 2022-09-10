@@ -63,7 +63,7 @@ const getByTitle = (titleId: number): AppThunkAction<KnownAction> => async (disp
         loadingTitle: titleId,
         loadingMy: undefined
     });
-    console.log('Character/getByTitle');
+    console.log('request Character/getByTitle');
     await axios.get('Character/getByTitle', { params: { titleId } })
         .then(response => {
             console.log('response Character/getByTitle', response);
@@ -101,7 +101,7 @@ const getMyCharacter = (): AppThunkAction<KnownAction> => async (dispatch, getSt
         loadingTitle: undefined,
         loadingMy: true
     });
-    console.log('Character/getMyCharacter');
+    console.log('request Character/getMyCharacter');
     await axios.get('Character/getMyCharacter')
         .then(response => {
             console.log('response Character/getMyCharacter', response);
@@ -151,7 +151,7 @@ const takeContol = (characterId : number): AppThunkAction<KnownAction> => async 
         loadingTitle: undefined,
         loadingMy: true
     });
-    console.log('Character/takeControl');
+    console.log('request Character/takeControl');
     await axios.get('Character/takeControl', { params: { characterId } })
         .then(response => {
             console.log('response Character/takeControl', response);

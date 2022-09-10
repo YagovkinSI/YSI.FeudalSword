@@ -43,7 +43,7 @@ const getCurrentUser = (): AppThunkAction<KnownAction> => async (dispatch, getSt
         return;
 
     dispatch({ type: 'LOADING_ACTION' });
-    console.log('User/currentUser');
+    console.log('request User/currentUser');
     await axios.get('User/currentUser')
         .then(response => {
             console.log('response User/currentUser', response);
@@ -70,7 +70,7 @@ const register = (userName: string, password: string, passwordConfirm: string)
         return;
 
     dispatch({ type: 'LOADING_ACTION' });
-    console.log('User/register');
+    console.log('request User/register');
     await axios.post('User/register', { userName, password, passwordConfirm })
         .then(response => {
             console.log('response User/register', response);
@@ -97,7 +97,7 @@ async (dispatch, getState) => {
         return;
 
     dispatch({ type: 'LOADING_ACTION' });
-    console.log('User/login');
+    console.log('request User/login');
     await axios.post('User/login', { userName, password })
         .then(response => {
             console.log('response User/login', response);
@@ -124,7 +124,7 @@ async (dispatch, getState) => {
         return;
 
     dispatch({ type: 'LOADING_ACTION' });
-    console.log('User/logout');
+    console.log('request User/logout');
     await axios.post('User/logout')
         .then(response => {
             console.log('response User/logout', response);

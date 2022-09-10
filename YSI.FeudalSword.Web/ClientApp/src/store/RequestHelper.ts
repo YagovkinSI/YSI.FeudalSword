@@ -1,19 +1,14 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ApplicationState } from "../store";
+import { ApplicationState } from ".";
 import { ICharacter } from "../models/ICharacter";
-import * as Characters from "../store/Characters";
-import GetErrorMessage from "./ServerErrorParserHepler";
-
-export interface IServerResponse<T> {
-    success: boolean,
-    data: T,
-    error: string
-}
+import * as Characters from "./Characters";
+import GetErrorMessage from "../helpers/ServerErrorParserHepler";
+import { IResponse } from "./DataHelper";
 
 export const getByTitle = async (
     appState: ApplicationState,
     titleId: number
-) : Promise<IServerResponse<ICharacter>> => {
+) : Promise<IResponse<ICharacter>> => {
     try {
         console.log('request Character/getByTitle');
         const response = await axios.get('Character/getByTitle', { params: { titleId } });
@@ -26,13 +21,13 @@ export const getByTitle = async (
         return {
             success: true,
             data: character
-        } as IServerResponse<ICharacter>
+        } as IResponse<ICharacter>
     } catch (error) {
         console.log('error Character/getByTitle', error);
             const message = GetErrorMessage(error as AxiosError);
             return {
                 success: false,
                 error: message
-            } as IServerResponse<ICharacter>
+            } as IResponse<ICharacter>
     }
 }

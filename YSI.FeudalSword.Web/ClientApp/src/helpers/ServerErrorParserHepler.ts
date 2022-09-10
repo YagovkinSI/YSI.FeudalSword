@@ -8,7 +8,6 @@ interface IResponseData {
 }
 
 const GetErrorMessage = (error: AxiosError): string  => {
-    console.log('error', error);
     if (error.response == undefined || error.response.data == undefined)
         return "Произошла неизвестная ошибка."
     

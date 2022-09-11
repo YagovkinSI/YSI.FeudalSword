@@ -8,25 +8,23 @@ import FetchData from './components/pages/FetchData';
 import './custom.css'
 import TestRequest from './components/pages/TestRequest';
 import { useDispatch, useSelector } from 'react-redux';
-import * as Authorization from './store/Authorization'
 import { ApplicationState } from './store';
 import LoginRegister from './components/pages/LoginRegister';
 import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
 import WorldMap from './components/pages/WorldMap';
+import { navBarActionCreators } from './store/UI/NavBar/actionCreators';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
 
     React.useEffect(() => {
-        dispatch(Authorization.actionCreators.getCurrentUser())
-    });
-    
+        if (!appState.privateData.user.isChecked)
+            dispatch(navBarActionCreators.getCurrentUser())
+    });    
     
     const appState = useSelector(state => state as ApplicationState);
-    const isAuthorized = appState.authorization == undefined 
-        ? false
-        : appState.authorization.user != undefined;
+    const isAuthorized = appState.privateData.user.currentUser != undefined ;
         
         const authorizedPaths = (
             <Layout>

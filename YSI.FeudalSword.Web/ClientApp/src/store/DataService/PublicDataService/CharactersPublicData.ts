@@ -1,41 +1,30 @@
-import { ApplicationState } from ".";
-import * as RequestHelper from './RequestHelper'
+import { ApplicationState } from "../..";
+import { IResponse } from "../../../models/IResponse";
+import * as RequestHelper from '../../RequsetService/Controllers/Character'
 
-export interface IResponse<T> {
-    success: boolean,
-    data: T | undefined,
-    error: string | undefined
-}
-
-export const getCharacterIdByDomainId = async (appState: ApplicationState, domainId: number) 
+const getCharacterIdByDomainId = async (appState: ApplicationState, domainId: number) 
 : Promise<IResponse<number>> => {
     const titleId = domainId;
     const character = appState.characters == undefined
         ? undefined
         : appState.characters.characters
             .find(c => c.titles.find(t => t.id == titleId));
-    if (character != undefined)
-    {
-        const characterId : IResponse<number> = {
+    if (character != undefined)    
+        return {
             data: character.id,
             error: undefined,
             success: true
-        }
-        return  characterId;
-    }
+        } as IResponse<number>    
     else {
         const characterResponse = await RequestHelper.getByTitle(appState, titleId);
-        const characterId : IResponse<number> = {
+        return {
             data: characterResponse.data != undefined 
                 ? characterResponse.data.id 
                 : undefined,
             error: characterResponse.error,
             success: characterResponse.success
-        }
-        return  characterId;
+        } as IResponse<number>
     }
-        
-    
-    
-
 }
+
+export const CharactersPublicData = { getCharacterIdByDomainId }

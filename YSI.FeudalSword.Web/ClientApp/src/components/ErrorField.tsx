@@ -5,9 +5,9 @@ import { ApplicationState } from '../store';
 
 const ErrorField: React.FC = () => { 
     const appState = useSelector(state => state as ApplicationState);
-    const error : string = appState.authorization == undefined 
+    const error : string = appState.ui.navBar.errorField.message == undefined 
         ? ''
-        : appState.authorization.error;
+        : appState.ui.navBar.errorField.message;
     
     if (error === null || error === '') {
         return (

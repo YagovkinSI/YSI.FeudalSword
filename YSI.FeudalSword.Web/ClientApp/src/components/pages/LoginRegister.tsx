@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Form, Spinner } from 'react-bootstrap';
-import * as Authorization from '../../store/Authorization'
 import { useState } from 'react';
 import { useLocation } from 'react-router';
 import { ApplicationState } from '../../store';
+import { navBarActionCreators } from '../../store/UI/NavBar/actionCreators';
 
 const LoginRegister: React.FC = () => {
     const appState = useSelector(state => state as ApplicationState);
@@ -18,9 +18,7 @@ const LoginRegister: React.FC = () => {
     const [passwordError, setPasswordError] = useState('');    
     const [passwordConfirmError, setPasswordConfirmError] = useState('');
 
-    const isLoading = appState.authorization == undefined 
-        ? true
-        : appState.authorization.isLoading;
+    const isLoading = appState.ui.navBar.loginMenu.isLoading;
     const isLogin = useLocation().pathname === "/login"
 
     const submit = (event: React.FormEvent<EventTarget>) => {
@@ -28,9 +26,9 @@ const LoginRegister: React.FC = () => {
         if (!validateForm(isLogin))
             return;
         if (isLogin)
-            dispatch(Authorization.actionCreators.login(login, password))
+            dispatch(navBarActionCreators.login(login, password))
         else 
-            dispatch(Authorization.actionCreators.register(login, password, passwordConfirm));
+            dispatch(navBarActionCreators.register(login, password, passwordConfirm));
     }
     
     const validateForm = (isLogin: boolean) => {

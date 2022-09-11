@@ -3,7 +3,7 @@ import { IHideLeftCanvas, ISetMapType, IShowLeftCanvas } from "./actions";
 
 export type MapPageAction = IShowLeftCanvas | IHideLeftCanvas | ISetMapType;
 
-export const reducerMapPage = (state : IUiState, action : MapPageAction) : IUiState => 
+export const reducerMapPage = (state : IUiState, action : MapPageAction) : IUiState | undefined => 
 {
     switch (action.type) {  
         case 'SET_MAP_TYPE':
@@ -44,6 +44,6 @@ export const reducerMapPage = (state : IUiState, action : MapPageAction) : IUiSt
                 }
             }
         default:
-            return state;             
+            return undefined;             
     }
 }

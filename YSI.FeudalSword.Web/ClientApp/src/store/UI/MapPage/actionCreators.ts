@@ -1,6 +1,6 @@
 import { AppThunkAction } from "../..";
 import { enMapType } from "./enums";
-import { showOwnerOfDomain } from "./Helpers/leftCanvasHelper";
+import { showOwnerOfDomain } from "./actionHelpers/leftCanvasHelper";
 import { MapPageAction } from "./reducer";
 
 const onClickDomainOnMap = (domainId : number) 

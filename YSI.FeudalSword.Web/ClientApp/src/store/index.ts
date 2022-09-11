@@ -1,16 +1,16 @@
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
-import * as Authorization from './Authorization';
 import * as Characters from './Characters';
 import * as UiState from './UI/ui';
+import * as PrivateData from './PrivateData/privateData';
 
 // The top-level state object
 export interface ApplicationState {
     ui: UiState.IUiState;
+    privateData: PrivateData.IPrivateDataState;
 
     counter: Counter.CounterState | undefined;
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
-    authorization: Authorization.AuthorizationState | undefined;
     characters: Characters.CharactersState | undefined;
 }
 
@@ -19,10 +19,10 @@ export interface ApplicationState {
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
     ui: UiState.reducer,
+    privateData: PrivateData.reducer,
 
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
-    authorization: Authorization.reducer,
     characters: Characters.reducer,
 };
 

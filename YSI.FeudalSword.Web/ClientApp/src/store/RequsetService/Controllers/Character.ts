@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ApplicationState } from ".";
-import { ICharacter } from "../models/ICharacter";
-import * as Characters from "./Characters";
-import GetErrorMessage from "../helpers/ServerErrorParserHepler";
-import { IResponse } from "./DataHelper";
+import { ApplicationState } from "../..";
+import { ICharacter } from "../../../models/ICharacter";
+import * as Characters from "../../Characters";
+import GetErrorMessage from "../../../helpers/ServerErrorParserHepler";
+import { IResponse } from "../../../models/IResponse";
 
 export const getByTitle = async (
     appState: ApplicationState,
@@ -24,10 +24,10 @@ export const getByTitle = async (
         } as IResponse<ICharacter>
     } catch (error) {
         console.log('error Character/getByTitle', error);
-            const message = GetErrorMessage(error as AxiosError);
-            return {
-                success: false,
-                error: message
-            } as IResponse<ICharacter>
+        const message = GetErrorMessage(error as AxiosError);
+        return {
+            success: false,
+            error: message
+        } as IResponse<ICharacter>
     }
 }

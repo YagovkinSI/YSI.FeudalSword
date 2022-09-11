@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import * as Authorization from '../../store/Authorization'
+import { useDispatch } from 'react-redux';
+import { navBarActionCreators } from '../../store/UI/NavBar/actionCreators';
 
 const Logout: React.FC = () => {    
     const dispatch = useDispatch(); 
 
     useEffect(() => {
-        dispatch(Authorization.actionCreators.logout())
+        dispatch(navBarActionCreators.logout())
     });
 
     return (
@@ -17,4 +17,4 @@ const Logout: React.FC = () => {
     )
 };
 
-export default connect()(Logout);
+export default Logout;

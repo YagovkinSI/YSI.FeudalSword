@@ -20,11 +20,9 @@ const CharacterCard :  React.FC<ICharacterCardProps> = ({characterId}) => {
     }); 
     
     const appState = useSelector(state => state as ApplicationState);
-    const userId = appState.authorization == undefined 
+    const userId = appState.privateData.user.currentUser == undefined 
         ? undefined
-        : appState.authorization.user == undefined
-            ? undefined
-            : appState.authorization.user.id;
+        : appState.privateData.user.currentUser.id;
     const characters = appState.characters == undefined 
         ? undefined
         : appState.characters.characters;  

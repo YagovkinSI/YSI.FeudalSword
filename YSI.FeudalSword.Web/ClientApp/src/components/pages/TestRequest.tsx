@@ -61,7 +61,4 @@ const TestRequest : React.FC = () => {
   );
 }
 
-export default connect(
-  (state: ApplicationState) => state.authorization, // Selects which state properties are merged into the component's props
-  TestRequestStore.actionCreators // Selects which action creators are merged into the component's props
-)(TestRequest as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+export default TestRequest;

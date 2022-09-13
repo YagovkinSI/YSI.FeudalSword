@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import { ApplicationState } from '../../store';
@@ -61,7 +61,4 @@ const TestRequest : React.FC = () => {
   );
 }
 
-export default connect(
-  (state: ApplicationState) => state.authorization, // Selects which state properties are merged into the component's props
-  TestRequestStore.actionCreators // Selects which action creators are merged into the component's props
-)(TestRequest as any); // eslint-disable-line @typescript-eslint/no-explicit-any
+export default TestRequest;

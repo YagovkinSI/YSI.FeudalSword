@@ -13,17 +13,13 @@ export interface LoginMenuProps {
 const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {     
     const appState = useSelector(state => state as ApplicationState);
 
-    const isLoading = appState.authorization == undefined 
-        ? true
-        : appState.authorization.isLoading;
-
-    const isAuthorized = appState.authorization == undefined 
-        ? false
-        : appState.authorization.user != undefined;
-        
-    const userName = appState.authorization == undefined || appState.authorization.user == undefined
+    const isLoading = appState.root.authorization.isBusy;
+    const isAuthorized = !appState.root.authorization.isBusy &&
+        appState.root.authorization.isChecked &&
+        appState.root.authorization.user != undefined;        
+    const userName = appState.root.authorization.user == undefined
         ? ''
-        : appState.authorization.user.userName;
+        : appState.root.authorization.user.userName;
     
     const loadinMenu = (
         <Fragment>

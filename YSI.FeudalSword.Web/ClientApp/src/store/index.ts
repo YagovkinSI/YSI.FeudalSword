@@ -1,13 +1,14 @@
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
-import * as Authorization from './Authorization';
 import * as Characters from './Characters';
+import * as Root from './Root';
 
 // The top-level state object
 export interface ApplicationState {
+    root: Root.RootState;
+
     counter: Counter.CounterState | undefined;
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
-    authorization: Authorization.AuthorizationState | undefined;
     characters: Characters.CharactersState | undefined;
 }
 
@@ -15,9 +16,10 @@ export interface ApplicationState {
 // the reducer with the matching name. It's important that the names match exactly, and that the reducer
 // acts on the corresponding ApplicationState property type.
 export const reducers = {
+    root: Root.reducer,
+
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
-    authorization: Authorization.reducer,
     characters: Characters.reducer,
 };
 

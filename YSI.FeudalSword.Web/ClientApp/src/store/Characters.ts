@@ -92,8 +92,7 @@ const getMyCharacter = (): AppThunkAction<KnownAction> => async (dispatch, getSt
     const appState = getState();
     if (!(appState != undefined && 
         appState.characters != undefined && 
-        appState.authorization != undefined &&
-        appState.authorization.user != undefined &&
+        appState.root.authorization.user != undefined &&
         appState.characters.loadingMy == 0))
         return;
     let characters = appState.characters.characters;
@@ -134,11 +133,10 @@ const takeContol = (characterId : number): AppThunkAction<KnownAction> => async 
     const appState = getState();
     if (!(appState != undefined && 
         appState.characters != undefined && 
-        appState.authorization != undefined &&
-        appState.authorization.user != undefined &&
+        appState.root.authorization.user != undefined &&
         appState.characters.loadingMy == 2))
         return;
-    const currentUser = appState.authorization.user;
+    const currentUser = appState.root.authorization.user;
 
     let characters = appState.characters.characters;
     let character = characters.find(c => c.id == characterId);

@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store';
-import * as Authorization from '../../store/Authorization';
 import map1j from '../../svg/map1';
 import {SVGMap} from 'react-svg-map';
 import '../../svg/index.css';
 import { useState } from 'react';
 import * as CharactersStore from '../../store/Characters';
-import { Card, Offcanvas, Spinner } from 'react-bootstrap';
-import { ICharacter } from '../../models/ICharacter';
+import { Offcanvas, Spinner } from 'react-bootstrap';
 import CharacterCard from '../cards/CharacterCard';
 
 const WorldMap :  React.FC = () => {
@@ -72,7 +70,4 @@ const WorldMap :  React.FC = () => {
     );
 };
 
-export default connect(
-    (state: ApplicationState) => state.authorization,
-    Authorization.actionCreators
-)(WorldMap);
+export default WorldMap;

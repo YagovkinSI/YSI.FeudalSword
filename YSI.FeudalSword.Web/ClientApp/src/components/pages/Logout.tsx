@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { authorizationActionCreators } from '../../store/Authorization/AuthorizationActionCreators';
 
 const Logout: React.FC = () => {    
@@ -17,4 +17,4 @@ const Logout: React.FC = () => {
     )
 };
 
-export default connect()(Logout);
+export default Logout;

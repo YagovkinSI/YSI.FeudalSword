@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { Fragment } from 'react';
 import { Spinner } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { NavItem, NavLink } from 'reactstrap';
-import { ApplicationState } from '../store';
+import { ApplicationState } from '../../store';
+import { navBarActionCreators } from '../../store/UI/NavBar/NavBarActionCreators';
 
-export interface LoginMenuProps {
-    resetOpen: () => void;
-}
-
-const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {     
+const LoginMenu :  React.FC = () => {  
+    const dispatch = useDispatch();   
     const appState = useSelector(state => state as ApplicationState);
 
     const isLoading = appState.root.authorization.isBusy;
@@ -21,7 +19,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
         ? ''
         : appState.root.authorization.user.userName;
     
-    const loadinMenu = (
+    const loadingMenu = (
         <Fragment>
             <NavItem>
                 <NavLink className="text-dark">
@@ -39,7 +37,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
                     tag={Link} 
                     className="text-dark" 
                     to="/profile"
-                    onClick={e => resetOpen()}>
+                    onClick={e => dispatch(navBarActionCreators.closeNavBarMenu())}>
                 Здравствуй, {userName}
                 </NavLink>
             </NavItem>            
@@ -48,7 +46,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
                     tag={Link} 
                     className="text-dark" 
                     to="/logout"
-                    onClick={e => resetOpen()}>
+                    onClick={e => dispatch(navBarActionCreators.closeNavBarMenu())}>
                     Выход
                 </NavLink>
             </NavItem>
@@ -62,7 +60,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
                     tag={Link} 
                     className="text-dark" 
                     to="/register" 
-                    onClick={e => resetOpen()}>
+                    onClick={e => dispatch(navBarActionCreators.closeNavBarMenu())}>
                     Регистрация
                 </NavLink>
             </NavItem>            
@@ -71,7 +69,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
                     tag={Link} 
                     className="text-dark" 
                     to="/login" 
-                    onClick={e => resetOpen()}>
+                    onClick={e => dispatch(navBarActionCreators.closeNavBarMenu())}>
                     Вход
                 </NavLink>
             </NavItem>
@@ -79,7 +77,7 @@ const LoginMenu :  React.FC<LoginMenuProps> = ({resetOpen}) => {
     )
 
     if (isLoading) {
-        return loadinMenu
+        return loadingMenu
     } else if (isAuthorized) {
         return authorizedMenu
     } else {

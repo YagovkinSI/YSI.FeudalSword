@@ -175,4 +175,4 @@ const LoginRegister: React.FC = () => {
     )  
 };
 
-export default connect()(LoginRegister);
+export default LoginRegister;

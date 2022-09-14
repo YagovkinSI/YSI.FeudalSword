@@ -1,13 +1,17 @@
 import { Action, Reducer } from "redux";
 import { AuthorizationActions, reducerAuthorization } from "./Authorization/AuthorizationReducer";
 import { AuthorizationState, defaultAuthorizationState } from "./Authorization/AuthorizationState";
+import { reducerUi } from "./UI/UiReducer";
+import { UiState, defaultUiState } from "./UI/UiState";
 
 export interface RootState {
     authorization: AuthorizationState,
+    ui: UiState
 }
 
 const defaultRootState: RootState = { 
-    authorization: defaultAuthorizationState
+    authorization: defaultAuthorizationState,
+    ui: defaultUiState
 };
 
 export const reducer: Reducer<RootState> = (
@@ -18,6 +22,10 @@ export const reducer: Reducer<RootState> = (
     let newState = reducerAuthorization(state, incomingAction as AuthorizationActions);
     if (newState != undefined)
         return newState;
-    
+
+    newState = reducerUi(state, incomingAction);
+    if (newState != undefined)
+        return newState; 
+        
     return state;
 };

@@ -18,11 +18,11 @@ namespace YSI.FeudalSword.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<CharacterController> _logger;
 
         public CharacterController(ApplicationDbContext context,
             UserManager<User> userManager,
-            ILogger<UserController> logger)
+            ILogger<CharacterController> logger)
         {
             _context = context;
             _userManager = userManager;

@@ -12,6 +12,7 @@ namespace YSI.FeudalSword.Web.Database
         public DbSet<Dynasty> Dynasties { get; set; }
         public DbSet<Title> Titles { get; set; }
         public DbSet<Domain> Domains { get; set; }
+        public DbSet<Turn> Turns { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                : base(options)
@@ -27,6 +28,7 @@ namespace YSI.FeudalSword.Web.Database
             CreateCharacters(builder);
             CreateTitles(builder);
             CreateDomains(builder);
+            CreateTurns(builder);
 
             PregenearateData(builder);
         }
@@ -92,6 +94,12 @@ namespace YSI.FeudalSword.Web.Database
         private void CreateDomains(ModelBuilder builder)
         {
             var model = builder.Entity<Domain>();
+            model.HasKey(x => x.Id);
+        }
+
+        private void CreateTurns(ModelBuilder builder)
+        {
+            var model = builder.Entity<Turn>();
             model.HasKey(x => x.Id);
         }
 

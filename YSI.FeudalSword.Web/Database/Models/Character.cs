@@ -18,6 +18,8 @@ namespace YSI.FeudalSword.Web.Database.Models
         public List<Character> Vassals { get; set; }
 
         public List<Title> Titles { get; set; }
+        public List<Unit> Units { get; set; }
+        public List<Army> Armies { get; set; }
 
         public Character(int id, string name, int? dynastyId = null, int ? suzerainId = null)
         {

@@ -7,5 +7,9 @@ namespace YSI.FeudalSword.Web.Database.Models
         public int Id { get; set; }
 
         public List<Title> Titles { get; set; }
+
+        public List<Unit> UnitsFromHere { get; set; }
+
+        public List<Army> ArmiesHere { get; set; }
     }
 }

@@ -2,16 +2,16 @@ import { ICurrentUser } from "../../models/ICurrentUser";
 import { RootState } from "../Root";
 
 interface SetUser {
-    type: 'SET_USER';
+    type: 'AUTHORIZATION/SET_USER';
     user: ICurrentUser | undefined
 }
 
 interface SetBusy {
-    type: 'SET_BUSY';
+    type: 'AUTHORIZATION/SET_BUSY';
 }
 
 interface SetError {
-    type: 'SET_ERROR';
+    type: 'AUTHORIZATION/SET_ERROR';
     error: string
 }
 
@@ -21,7 +21,7 @@ export const reducerAuthorization = (state : RootState, action : AuthorizationAc
 : RootState | undefined => 
 {
     switch (action.type) {  
-        case 'SET_USER':
+        case 'AUTHORIZATION/SET_USER':
             return {
                 ...state,
                 authorization: {
@@ -32,7 +32,7 @@ export const reducerAuthorization = (state : RootState, action : AuthorizationAc
                     user: action.user
                 }
             }
-        case 'SET_BUSY':
+        case 'AUTHORIZATION/SET_BUSY':
             return {
                 ...state,
                 authorization: {
@@ -40,7 +40,7 @@ export const reducerAuthorization = (state : RootState, action : AuthorizationAc
                     isBusy: true
                 }
             }
-        case 'SET_ERROR':
+        case 'AUTHORIZATION/SET_ERROR':
             return {
                 ...state,
                 authorization: {

@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
+import { turnController } from "./TurnController";
 import { userController } from "./UserController";
 
-export const requestService = { userController };
+export const requestService = { userController, turnController };
 
 export interface IResponse<T> {
     data: T | undefined,

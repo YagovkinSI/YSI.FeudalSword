@@ -7,14 +7,14 @@ const getCurrentUser = ()
     const appState = getState();
     if (appState.root.authorization.isBusy)
         return;
-    dispatch({ type: 'SET_BUSY' })
+    dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.getCurrentUser(appState);
     if (response.success) {
         const user = response.data == undefined ? undefined : response.data.user;
-        dispatch({ type: 'SET_USER', user });
+        dispatch({ type: 'AUTHORIZATION/SET_USER', user });
     } else {
         const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
-        dispatch({ type: 'SET_ERROR', error });
+        dispatch({ type: 'AUTHORIZATION/SET_ERROR', error });
     }
 }
 
@@ -23,14 +23,14 @@ const register = (userName: string, password: string, passwordConfirm: string)
     const appState = getState();
     if (appState.root.authorization.isBusy)
         return;
-    dispatch({ type: 'SET_BUSY' })
+    dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.register(appState, userName, password, passwordConfirm);
     if (response.success) {
         const user = response.data;
-        dispatch({ type: 'SET_USER', user });
+        dispatch({ type: 'AUTHORIZATION/SET_USER', user });
     } else {
         const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
-        dispatch({ type: 'SET_ERROR', error });
+        dispatch({ type: 'AUTHORIZATION/SET_ERROR', error });
     }
 }
 
@@ -40,14 +40,14 @@ async (dispatch, getState) => {
     const appState = getState();
     if (appState.root.authorization.isBusy)
         return;
-    dispatch({ type: 'SET_BUSY' })
+    dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.login(appState, userName, password);
     if (response.success) {
         const user = response.data;
-        dispatch({ type: 'SET_USER', user });
+        dispatch({ type: 'AUTHORIZATION/SET_USER', user });
     } else {
         const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
-        dispatch({ type: 'SET_ERROR', error });
+        dispatch({ type: 'AUTHORIZATION/SET_ERROR', error });
     }
 }
 
@@ -57,13 +57,13 @@ async (dispatch, getState) => {
     const appState = getState();
     if (appState.root.authorization.isBusy)
         return;
-    dispatch({ type: 'SET_BUSY' })
+    dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.logout(appState);
     if (response.success) {
-        dispatch({ type: 'SET_USER', user: undefined });
+        dispatch({ type: 'AUTHORIZATION/SET_USER', user: undefined });
     } else {
         const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
-        dispatch({ type: 'SET_ERROR', error });
+        dispatch({ type: 'AUTHORIZATION/SET_ERROR', error });
     }
 }
 

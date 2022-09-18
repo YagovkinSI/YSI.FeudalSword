@@ -14,6 +14,7 @@ import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
 import WorldMap from './components/pages/WorldMap';
 import { authorizationActionCreators } from './store/Authorization/AuthorizationActionCreators';
+import { currentTurnActionCreators } from './store/PublicData/CurrentTurn/CurrentTurnActionCreators';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -22,7 +23,7 @@ const App: React.FC = () => {
     React.useEffect(() => {
         if (!appState.root.authorization.isBusy &&
             !appState.root.authorization.isChecked)
-            dispatch(authorizationActionCreators.getCurrentUser())
+            dispatch(authorizationActionCreators.getCurrentUser());
     });    
     
     const isAuthorized = !appState.root.authorization.isBusy &&

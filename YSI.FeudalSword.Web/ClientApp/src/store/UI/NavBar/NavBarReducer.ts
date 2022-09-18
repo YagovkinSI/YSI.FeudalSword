@@ -1,11 +1,11 @@
 import { RootState } from "../../Root";
 
 interface Close {
-    type: 'CLOSE'
+    type: 'UI/NAVBAR/CLOSE'
 }
 
 interface Toggle {
-    type: 'TOGGLE'
+    type: 'UI/NAVBAR/TOGGLE'
 }
 
 export type NavBarActions = Close | Toggle;
@@ -14,7 +14,7 @@ export const reducerNavBar = (state : RootState, action : NavBarActions)
 : RootState | undefined => 
 {
     switch (action.type) {  
-        case 'CLOSE':
+        case 'UI/NAVBAR/CLOSE':
             return {
                 ...state,
                 ui: {
@@ -24,7 +24,7 @@ export const reducerNavBar = (state : RootState, action : NavBarActions)
                     }
                 }
             } 
-        case 'TOGGLE':
+        case 'UI/NAVBAR/TOGGLE':
             return {
                 ...state,
                 ui: {

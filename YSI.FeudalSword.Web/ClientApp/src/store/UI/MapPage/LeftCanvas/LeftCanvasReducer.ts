@@ -1,3 +1,5 @@
+import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
+import { publicDataHelper } from "../../../PublicData/PublicDataHelper";
 import { RootState } from "../../../Root";
 import { enContentType } from "./LeftCanvasState";
 
@@ -8,7 +10,8 @@ interface Close {
 interface SetContent {
     type: 'UI/MAPPAGE/LEFTCANVAS/SET_CONTENT',
     contentType: enContentType,
-    contentId: number
+    contentId: number,
+    publicData: IPublicDataApiModel
 }
 
 interface SetError {
@@ -46,6 +49,7 @@ export const reducerLeftCanvas = (state : RootState, action : LeftCanvasActions)
             } 
         case 'UI/MAPPAGE/LEFTCANVAS/SET_CONTENT':
             const requestContentId = `${action.contentType}_${action.contentId}`;
+            publicDataHelper.update(state, action.publicData)
             if (state.ui.mapPage.leftCanvas.isBusy != requestContentId)
                 return state;
             return {

@@ -1,4 +1,5 @@
 import { ApplicationState, AppThunkAction } from "../../..";
+import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
 import { requestService } from "../../../RequestService/RequestService";
 import { LeftCanvasActions } from "./LeftCanvasReducer";
 import { enContentType } from "./LeftCanvasState";
@@ -13,12 +14,22 @@ const setDomainForLeftCanvas = async (
     dispatch : (action: LeftCanvasActions) => void, 
     domainId: number
 ) => {
-    dispatch({ 
-        type: 'UI/MAPPAGE/LEFTCANVAS/SET_ERROR', 
-        error: 'В реализации... //TODO',
-        contentType: enContentType.Domain,
-        contentId: domainId  
-    });
+    const response = await requestService.domainController.get(appState, domainId);
+    if (response.success) {
+        dispatch({ 
+            type: 'UI/MAPPAGE/LEFTCANVAS/SET_CONTENT', 
+            contentType: enContentType.Domain,
+            contentId: domainId,
+            publicData: response.data as IPublicDataApiModel
+        });
+    } else {
+        const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
+        dispatch({ type: 'UI/MAPPAGE/LEFTCANVAS/SET_ERROR', 
+            error,
+            contentType: enContentType.Domain,
+            contentId: domainId
+        });
+    }
 }
 
 const setCharacterForLeftCanvas = async (
@@ -56,10 +67,10 @@ const setContentForLeftCanvas = (contentType : enContentType, contentId : number
             await setDomainForLeftCanvas(appState, dispatch, contentId);
             break;
         case enContentType.Character:
-            await setDomainForLeftCanvas(appState, dispatch, contentId);
+            await setCharacterForLeftCanvas(appState, dispatch, contentId);
             break;
         case enContentType.Army:
-            await setDomainForLeftCanvas(appState, dispatch, contentId);
+            await setArmyForLeftCanvas(appState, dispatch, contentId);
             break;
         default:
             dispatch({ 

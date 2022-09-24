@@ -14,13 +14,13 @@ namespace YSI.FeudalSword.Web.ApiModels
         public int ArmyId { get; set; }
         public int OwnerId { get; set; }
 
-        public PublicUnitApiModel(Unit unit)
+        public PublicUnitApiModel(Unit databaseItem)
         {
-            Id = unit.Id;
-            Type = unit.Type;
-            CountAbout = CountHelper.Round(unit.Count);
-            ArmyId = unit.ArmyId;
-            OwnerId = unit.OwnerId;
+            Id = databaseItem.Id;
+            Type = databaseItem.Type;
+            CountAbout = CountHelper.Round(databaseItem.Count);
+            ArmyId = databaseItem.ArmyId;
+            OwnerId = databaseItem.OwnerId;
         }
     }
 }

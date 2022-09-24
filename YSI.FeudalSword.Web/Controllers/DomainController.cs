@@ -14,12 +14,12 @@ namespace YSI.FeudalSword.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ArmyController : Controller
+    public class DomainController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<ArmyController> _logger;
 
-        public ArmyController(ApplicationDbContext context,
+        public DomainController(ApplicationDbContext context,
             ILogger<ArmyController> logger)
         {
             _context = context;
@@ -28,24 +28,21 @@ namespace YSI.FeudalSword.Web.Controllers
 
         [HttpGet]
         [Route("get")]
-        public async Task<ActionResult<PublicDataApiModel>> get(int armyId)
+        public async Task<ActionResult<PublicDataApiModel>> Get(int domainId)
         {
             try
             {
                 var saga = await SagaHelper.GetSaga(_context);
 
-                var army = await _context.Armies
-                    .Include(a => a.Units)
-                    .Include(a => a.Commander)
-                    .Include(a => a.Location)
-                    .SingleAsync(a => a.Id == armyId);
+                var domain = await _context.Domains
+                    .Include(d => d.Titles)
+                    .Include(d => d.ArmiesHere)
+                    .SingleAsync(a => a.Id == domainId);
                 var publicDataApiModel = new PublicDataApiModel(saga);
-                publicDataApiModel.AddArmies(new List<Army> { army });
-                publicDataApiModel.AddUnits(army.Units);
-                publicDataApiModel.AddCharacters(new List<Character> { army.Commander });
-                publicDataApiModel.AddDomains(new List<Domain> { army.Location });
+                publicDataApiModel.AddDomains(new List<Domain> { domain });
+                publicDataApiModel.AddTitles(domain.Titles);
+                publicDataApiModel.AddArmies(domain.ArmiesHere);
                 return Ok(publicDataApiModel);
-
             }
             catch (Exception ex)
             {

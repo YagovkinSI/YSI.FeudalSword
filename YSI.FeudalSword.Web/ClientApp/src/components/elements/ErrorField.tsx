@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { ApplicationState } from '../store';
+import { ApplicationState } from '../../store';
 
 const ErrorField: React.FC = () => { 
     const appState = useSelector(state => state as ApplicationState);

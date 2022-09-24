@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../store';
-import { currentTurnActionCreators } from '../store/PublicData/CurrentTurn/CurrentTurnActionCreators';
+import { ApplicationState } from '../../store';
+import { currentTurnActionCreators } from '../../store/PublicData/CurrentTurn/CurrentTurnActionCreators';
 
 const GameStateBar: React.FC = () => { 
     const dispatch = useDispatch();

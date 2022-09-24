@@ -12,9 +12,8 @@ import { ApplicationState } from './store';
 import LoginRegister from './components/pages/LoginRegister';
 import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
-import WorldMap from './components/pages/WorldMap';
 import { authorizationActionCreators } from './store/Authorization/AuthorizationActionCreators';
-import { currentTurnActionCreators } from './store/PublicData/CurrentTurn/CurrentTurnActionCreators';
+import MapPage from './components/pages/MapPage';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -39,7 +38,7 @@ const App: React.FC = () => {
                 <Route path='/test/:index?' component={TestRequest} />
                 <Route path='/logout' component={Logout} />
                 <Route path='/profile' component={Profile} />
-                <Route path='/map' component={WorldMap} />
+                <Route path='/map' component={MapPage} />
                 <Redirect to='/' />
             </Switch>
         </Layout>
@@ -54,7 +53,7 @@ const App: React.FC = () => {
                 <Route path='/test/:index?' component={TestRequest} />
                 <Route path='/register' component={LoginRegister} />
                 <Route path='/login' component={LoginRegister} />
-                <Route path='/map' component={WorldMap} />
+                <Route path='/map' component={MapPage} />
                 <Redirect to='/' />
             </Switch>
         </Layout>

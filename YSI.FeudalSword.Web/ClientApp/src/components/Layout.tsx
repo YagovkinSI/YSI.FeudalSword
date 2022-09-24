@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Container } from 'reactstrap';
-import ErrorField from './ErrorField';
-import GameStateBar from './GameStateBar';
+import ErrorField from './elements/ErrorField';
+import GameStateBar from './elements/GameStateBar';
 import NavMenu from './NavMenu';
 
 export interface LayoutProps {

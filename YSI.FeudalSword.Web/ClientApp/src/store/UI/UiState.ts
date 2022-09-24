@@ -1,9 +1,12 @@
+import { defaultMapPageState, MapPageState } from "./MapPage/MapPageState"
 import { defaultNavBarState, NavBarState } from "./NavBar/NavBarState"
 
 export interface UiState {
-    navBar: NavBarState
+    navBar: NavBarState,
+    mapPage: MapPageState
 }
 
 export const defaultUiState : UiState = {
-    navBar: defaultNavBarState
+    navBar: defaultNavBarState,
+    mapPage: defaultMapPageState
 }

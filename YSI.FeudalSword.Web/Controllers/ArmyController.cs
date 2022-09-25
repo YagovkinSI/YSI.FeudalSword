@@ -40,10 +40,11 @@ namespace YSI.FeudalSword.Web.Controllers
                     .Include(a => a.Location)
                     .SingleAsync(a => a.Id == armyId);
                 var publicDataApiModel = new PublicDataApiModel(saga);
-                publicDataApiModel.AddArmies(new List<Army> { army });
+                publicDataApiModel.AddArmies(new List<Army> { army }, true);
                 publicDataApiModel.AddUnits(army.Units);
-                publicDataApiModel.AddCharacters(new List<Character> { army.Commander });
-                publicDataApiModel.AddDomains(new List<Domain> { army.Location });
+                publicDataApiModel.AddCharacters(new List<Character> { army.Commander }, 
+                    false, false, false, false);
+                publicDataApiModel.AddDomains(new List<Domain> { army.Location }, false);
                 return Ok(publicDataApiModel);
 
             }

@@ -10,11 +10,13 @@ namespace YSI.FeudalSword.Web.ApiModels
         public int[] TitlesIds { get; set; }
         public int[] ArmiesHereIds { get; set; }
 
-        public PublicDomainApiModel(Domain databaseItem)
+        public PublicDomainApiModel(Domain databaseItem, bool withArmiesHere)
         {
             Id = databaseItem.Id;
             TitlesIds = databaseItem.Titles?.Select(t => t.Id).ToArray();
-            ArmiesHereIds = databaseItem.ArmiesHere?.Select(t => t.Id).ToArray();
+            ArmiesHereIds = withArmiesHere
+                ? databaseItem.ArmiesHere?.Select(t => t.Id).ToArray()
+                : null;
         }
     }
 }

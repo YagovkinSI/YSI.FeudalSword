@@ -18,7 +18,7 @@ namespace YSI.FeudalSword.Web.ApiModels
         public int? JureSuzerainId { get; set; }
         public int[] JureVassalsIds { get; set; }
 
-        public PublicTitleApiModel(Title databaseItem)
+        public PublicTitleApiModel(Title databaseItem, bool withJureVassals)
         {
             Id = databaseItem.Id;
             Name = databaseItem.Name;
@@ -26,7 +26,9 @@ namespace YSI.FeudalSword.Web.ApiModels
             OwnerId = databaseItem.OwnerId;
             CapitalId = databaseItem.CapitalId;
             JureSuzerainId = databaseItem.JureSuzerainId;
-            JureVassalsIds = databaseItem.JureVassals?.Select(v => v.Id).ToArray();
+            JureVassalsIds = withJureVassals
+                ? databaseItem.JureVassals?.Select(v => v.Id).ToArray()
+                : null;
         }
     }
 }

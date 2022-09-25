@@ -20,17 +20,26 @@ namespace YSI.FeudalSword.Web.ApiModels
         public int[] UnitsIds { get; set; }
         public int[] ArmiesIds { get; set; }
 
-        public PublicCharacterApiModel(Character databaseItem)
+        public PublicCharacterApiModel(Character databaseItem, 
+            bool withVassals, bool withTitles, bool withUnits, bool withArmies)
         {
             Id = databaseItem.Id;
             Name = databaseItem.Name;
             DynastyId = databaseItem.DynastyId;
             UserId = databaseItem.UserId;
             SuzerainId = databaseItem.SuzerainId;
-            VassalsIds = databaseItem.Vassals?.Select(v => v.Id).ToArray();
-            TitlesIds = databaseItem.Titles?.Select(s => s.Id).ToArray();
-            UnitsIds = databaseItem.Units?.Select(u => u.Id).ToArray();
-            ArmiesIds = databaseItem.Armies?.Select(u => u.Id).ToArray();
+            VassalsIds = withVassals
+                ? databaseItem.Vassals?.Select(v => v.Id).ToArray()
+                : null;
+            TitlesIds = withTitles
+                ? databaseItem.Titles?.Select(s => s.Id).ToArray()
+                : null;
+            UnitsIds = withUnits
+                ? databaseItem.Units?.Select(u => u.Id).ToArray()
+                : null;
+            ArmiesIds = withArmies
+                ? databaseItem.Armies?.Select(u => u.Id).ToArray()
+                : null;
         }
     }
 }

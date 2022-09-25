@@ -11,11 +11,13 @@ namespace YSI.FeudalSword.Web.ApiModels
 
         public int[] CharactersIds { get; set; }
 
-        public PublicDynastyApiModel(Dynasty databaseItem)
+        public PublicDynastyApiModel(Dynasty databaseItem, bool withCharacters)
         {
             Id = databaseItem.Id;
             Name = databaseItem.Name;
-            CharactersIds = databaseItem.Characters?.Select(c => c.Id).ToArray();
+            CharactersIds = withCharacters
+                ? databaseItem.Characters?.Select(c => c.Id).ToArray()
+                : null;
         }
     }
 }

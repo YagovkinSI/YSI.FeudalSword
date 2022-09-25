@@ -21,7 +21,7 @@ namespace YSI.FeudalSword.Web.ApiModels
             Saga = saga;
         }
 
-        internal void AddArmies(IEnumerable<Army> list)
+        internal void AddArmies(IEnumerable<Army> list, bool withUnits)
         {
             if (Armies == null)
                 Armies = new List<PublicArmyApiModel>();
@@ -33,7 +33,7 @@ namespace YSI.FeudalSword.Web.ApiModels
                     continue;
                 if (apiList.Any(a => a.Id == item.Id))
                     continue;
-                var apiModel = new PublicArmyApiModel(item);
+                var apiModel = new PublicArmyApiModel(item, withUnits);
                 apiList.Add(apiModel);
             }
         }
@@ -55,7 +55,7 @@ namespace YSI.FeudalSword.Web.ApiModels
             }
         }
 
-        internal void AddDomains(IEnumerable<Domain> list)
+        internal void AddDomains(IEnumerable<Domain> list, bool withArmiesHere)
         {
             if (Domains == null)
                 Domains = new List<PublicDomainApiModel>();
@@ -67,12 +67,12 @@ namespace YSI.FeudalSword.Web.ApiModels
                     continue;
                 if (apiList.Any(a => a.Id == item.Id))
                     continue;
-                var apiModel = new PublicDomainApiModel(item);
+                var apiModel = new PublicDomainApiModel(item, withArmiesHere);
                 apiList.Add(apiModel);
             }
         }
 
-        internal void AddUsers(List<User> list)
+        internal void AddUsers(List<User> list, bool withCharacters)
         {
             if (Users == null)
                 Users = new List<PublicUserApiModel>();
@@ -84,12 +84,12 @@ namespace YSI.FeudalSword.Web.ApiModels
                     continue;
                 if (apiList.Any(a => a.Id == item.Id))
                     continue;
-                var apiModel = new PublicUserApiModel(item);
+                var apiModel = new PublicUserApiModel(item, withCharacters);
                 apiList.Add(apiModel);
             }
         }
 
-        internal void AddTitles(IEnumerable<Title> list)
+        internal void AddTitles(IEnumerable<Title> list, bool withJureVassals)
         {
             if (Titles == null)
                 Titles = new List<PublicTitleApiModel>();
@@ -101,12 +101,13 @@ namespace YSI.FeudalSword.Web.ApiModels
                     continue;
                 if (apiList.Any(a => a.Id == item.Id))
                     continue;
-                var apiModel = new PublicTitleApiModel(item);
+                var apiModel = new PublicTitleApiModel(item, withJureVassals);
                 apiList.Add(apiModel);
             }
         }
 
-        internal void AddCharacters(IEnumerable<Character> list)
+        internal void AddCharacters(IEnumerable<Character> list,
+            bool withVassals, bool withTitles, bool withUnits, bool withArmies)
         {
             if (Characters == null)
                 Characters = new List<PublicCharacterApiModel>();
@@ -118,12 +119,13 @@ namespace YSI.FeudalSword.Web.ApiModels
                     continue;
                 if (apiList.Any(a => a.Id == item.Id))
                     continue;
-                var apiModel = new PublicCharacterApiModel(item);
+                var apiModel = new PublicCharacterApiModel(item, 
+                        withVassals, withTitles, withUnits, withArmies);
                 apiList.Add(apiModel);
             }
         }
 
-        internal void AddDynasties(IEnumerable<Dynasty> list)
+        internal void AddDynasties(IEnumerable<Dynasty> list, bool withCharacters)
         {
             if (Dynasties == null)
                 Dynasties = new List<PublicDynastyApiModel>();
@@ -135,7 +137,7 @@ namespace YSI.FeudalSword.Web.ApiModels
                     continue;
                 if (apiList.Any(a => a.Id == item.Id))
                     continue;
-                var apiModel = new PublicDynastyApiModel(item);
+                var apiModel = new PublicDynastyApiModel(item, withCharacters);
                 apiList.Add(apiModel);
             }
         }

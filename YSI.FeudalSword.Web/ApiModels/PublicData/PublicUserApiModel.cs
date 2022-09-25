@@ -13,13 +13,15 @@ namespace YSI.FeudalSword.Web.ApiModels
 
         public int[] CharactersIds { get; set; }
 
-        public PublicUserApiModel(User databaseItem)
+        public PublicUserApiModel(User databaseItem, bool withCharacters)
         {
             Id = databaseItem.Id;
             UserName = databaseItem.UserName;
             Created = databaseItem.Created;
             LastActivity = databaseItem.LastActivity;
-            CharactersIds = databaseItem.Characters?.Select(c => c.Id).ToArray();
+            CharactersIds = withCharacters
+                ? databaseItem.Characters?.Select(c => c.Id).ToArray()
+                : null;
         }
     }
 }

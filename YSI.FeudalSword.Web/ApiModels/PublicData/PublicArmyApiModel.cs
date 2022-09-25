@@ -12,12 +12,14 @@ namespace YSI.FeudalSword.Web.ApiModels
 
         public int[] UnitIds { get; set; }
 
-        public PublicArmyApiModel(Army databaseItem)
+        public PublicArmyApiModel(Army databaseItem, bool withUnits)
         {
             Id = databaseItem.Id;
             CommanderId = databaseItem.CommanderId;
             LocationId = databaseItem.LocationId;
-            UnitIds = databaseItem.Units?.Select(u => u.Id).ToArray();
+            UnitIds = withUnits
+                ? databaseItem.Units?.Select(u => u.Id).ToArray()
+                : null;
         }
     }
 }

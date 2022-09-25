@@ -16,17 +16,14 @@ const CharacterCard :  React.FC<ICharacter> = (character) => {
     const userId = appState.root.authorization.user == undefined
         ? undefined
         : appState.root.authorization.user.id;
-    console.log('userId', userId);
     const characters = appState.characters == undefined 
         ? undefined
         : appState.characters.characters;   
-    console.log('characters', characters); 
     const canTakeCharacter = characters == undefined || userId == undefined  
         ? false
         : appState.characters == undefined    
             ? false
             : !characters.some(c => c.userId == userId) 
-    console.log('canTakeCharacter', canTakeCharacter); 
 
     const takeCharacter = () => {
         dispatch(Characters.actionCreators.takeContol(character.id))

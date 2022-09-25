@@ -44,10 +44,11 @@ namespace YSI.FeudalSword.Web.Controllers
                     .Include(c => c.Titles)
                     .SingleAsync(a => a.Id == characterId);
                 var publicDataApiModel = new PublicDataApiModel(saga);
-                publicDataApiModel.AddCharacters(new List<Character> { character });
-                publicDataApiModel.AddDynasties(new List<Dynasty> { character.Dynasty });
-                publicDataApiModel.AddUsers(new List<User> { character.User });
-                publicDataApiModel.AddTitles(character.Titles);
+                publicDataApiModel.AddCharacters(new List<Character> { character }, 
+                    false, true, false, false);
+                publicDataApiModel.AddDynasties(new List<Dynasty> { character.Dynasty }, false);
+                publicDataApiModel.AddUsers(new List<User> { character.User }, false);
+                publicDataApiModel.AddTitles(character.Titles, false);
                 return Ok(publicDataApiModel);
             }
             catch (Exception ex)

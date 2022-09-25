@@ -1,10 +1,17 @@
 import { AxiosError } from "axios";
+import { armyController } from "./ArmyController";
 import { characterController } from "./CharacterController";
 import { domainController } from "./DomainController";
 import { turnController } from "./TurnController";
 import { userController } from "./UserController";
 
-export const requestService = { userController, turnController, domainController, characterController };
+export const requestService = { 
+    userController, 
+    turnController, 
+    domainController, 
+    characterController,
+    armyController 
+};
 
 export interface IResponse<T> {
     data: T | undefined,

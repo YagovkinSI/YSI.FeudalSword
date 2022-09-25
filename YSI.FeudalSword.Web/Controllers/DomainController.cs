@@ -39,9 +39,9 @@ namespace YSI.FeudalSword.Web.Controllers
                     .Include(d => d.ArmiesHere)
                     .SingleAsync(a => a.Id == domainId);
                 var publicDataApiModel = new PublicDataApiModel(saga);
-                publicDataApiModel.AddDomains(new List<Domain> { domain });
-                publicDataApiModel.AddTitles(domain.Titles);
-                publicDataApiModel.AddArmies(domain.ArmiesHere);
+                publicDataApiModel.AddDomains(new List<Domain> { domain }, true);
+                publicDataApiModel.AddTitles(domain.Titles, false);
+                publicDataApiModel.AddArmies(domain.ArmiesHere, false);
                 return Ok(publicDataApiModel);
             }
             catch (Exception ex)

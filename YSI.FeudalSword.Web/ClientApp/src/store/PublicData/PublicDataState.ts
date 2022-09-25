@@ -10,7 +10,9 @@ export interface PublicDataState {
     users: IPublicUser[],
     titles : IPublicTitle[],
     characters : IPublicCharacter[],
-    dynasties : IPublicDynasty[]
+    dynasties : IPublicDynasty[],
+
+    loadings: string[]
 }
 
 export const defaultPublicDataState : PublicDataState = {
@@ -22,5 +24,7 @@ export const defaultPublicDataState : PublicDataState = {
     titles : [],
     characters : [],
     dynasties : [],
+
+    loadings: []
 }
 

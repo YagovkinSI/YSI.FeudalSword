@@ -1,4 +1,4 @@
-import { IPublicDataApiModel, IPublicDomain, IPublicTitle, ISaga } from "../../models/IPublicDataApiModel"
+import { IPublicArmy, IPublicDataApiModel, IPublicDomain, IPublicTitle, ISaga } from "../../models/IPublicDataApiModel"
 import { RootState } from "../Root";
 
 const reset = (appState : RootState, saga : ISaga) => {
@@ -19,6 +19,13 @@ const updateTitles = (appState : RootState, array : IPublicTitle[]) => {
     });
 }
 
+const updateArmies = (appState : RootState, array : IPublicArmy[]) => {
+    array.forEach(item => {
+        if (!appState.publicData.armies.some(i => i.id == item.id))
+            appState.publicData.armies.push(item)
+    });
+}
+
 const update = (appState : RootState, publicData : IPublicDataApiModel) => {
     if (appState.publicData.currentTurn.id != publicData.saga.turnNumber)
         reset(appState, publicData.saga);
@@ -26,6 +33,8 @@ const update = (appState : RootState, publicData : IPublicDataApiModel) => {
         updateDomains(appState, publicData.domains)
     if (publicData.titles != undefined)
         updateTitles(appState, publicData.titles)
+    if (publicData.armies != undefined)
+        updateArmies(appState, publicData.armies)
 }
 
 

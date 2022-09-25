@@ -27,7 +27,13 @@ interface SetBusy {
     contentId: number
 }
 
-export type LeftCanvasActions = Close | SetContent | SetError | SetBusy;
+interface IsLoaded {
+    type: 'UI/MAPPAGE/LEFTCANVAS/IS_LOADED',
+    contentType: enContentType,
+    contentId: number
+}
+
+export type LeftCanvasActions = Close | SetContent | SetError | SetBusy | IsLoaded;
 
 export const reducerLeftCanvas = (state : RootState, action : LeftCanvasActions) 
 : RootState | undefined => 
@@ -94,6 +100,27 @@ export const reducerLeftCanvas = (state : RootState, action : LeftCanvasActions)
                         leftCanvas: {
                             ...state.ui.mapPage.leftCanvas,
                             isBusy: requestBusyId,
+                            isOpen: true,
+                            error: undefined,
+                            contentType: action.contentType,
+                            contentId: action.contentId
+                        }
+                    }
+                }
+            }
+        case 'UI/MAPPAGE/LEFTCANVAS/IS_LOADED':
+            const requestIsLoadedId = `${action.contentType}_${action.contentId}`;
+            if (state.ui.mapPage.leftCanvas.isBusy != requestIsLoadedId)
+                return state;
+            return {
+                ...state,
+                ui: {
+                    ...state.ui,
+                    mapPage: {
+                        ...state.ui.mapPage,
+                        leftCanvas: {
+                            ...state.ui.mapPage.leftCanvas,
+                            isBusy: undefined,
                             isOpen: true,
                             error: undefined,
                             contentType: action.contentType,

@@ -1,6 +1,7 @@
 import { ApplicationState, AppThunkAction } from "../../..";
 import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
 import { requestService } from "../../../RequestService/RequestService";
+import { domainCardHelper } from "./Helpers/DomainCardHelper";
 import { LeftCanvasActions } from "./LeftCanvasReducer";
 import { enContentType } from "./LeftCanvasState";
 
@@ -14,6 +15,15 @@ const setDomainForLeftCanvas = async (
     dispatch : (action: LeftCanvasActions) => void, 
     domainId: number
 ) => {
+    if (domainCardHelper.checkDataForDomain(appState.root, domainId))
+    {
+        dispatch({ 
+            type: 'UI/MAPPAGE/LEFTCANVAS/IS_LOADED', 
+            contentType: enContentType.Domain,
+            contentId: domainId
+        });
+        return;
+    }
     const response = await requestService.domainController.get(appState, domainId);
     if (response.success) {
         dispatch({ 

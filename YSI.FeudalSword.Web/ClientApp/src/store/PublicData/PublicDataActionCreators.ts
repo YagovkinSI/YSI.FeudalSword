@@ -48,4 +48,26 @@ const loadArmy = (armyId : number)
     }
 }
 
-export const publicDataActionCreators = { loadCharacter, loadArmy }
+const loadDomain = (domainId : number) 
+: AppThunkAction<PublicDataActions> => async (dispatch, getState) => {
+    const appState = getState();
+    const loadingId = `loadDomain ${domainId}`;
+    if (!appState.root.publicData.loadings.some(l => l == loadingId))
+    {   
+        dispatch({ type: 'PUBLIC_DATA/LOAD_DATA', loadingId});
+        const response = await requestService.domainController.get(appState, domainId);
+        if (response.success) {
+            dispatch({ 
+                type: 'PUBLIC_DATA/LOADED_DATA', 
+                loadingId,
+                publicData: response.data as IPublicDataApiModel 
+            });
+        } else {
+            const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
+            console.log(error);
+            //TODO
+        }
+    }
+}
+
+export const publicDataActionCreators = { loadCharacter, loadArmy, loadDomain }

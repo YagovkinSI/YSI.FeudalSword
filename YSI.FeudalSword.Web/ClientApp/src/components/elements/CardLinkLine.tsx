@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { enUnitType } from "../../models/IPublicDataApiModel";
+import { enTitleRank, enUnitType } from "../../models/IPublicDataApiModel";
 import { ApplicationState } from "../../store";
 import { publicDataActionCreators } from "../../store/PublicData/PublicDataActionCreators";
 
@@ -106,6 +106,30 @@ const getArmyInfo = (
     }
 }
 
+const getDomainInfo = (
+    appState : ApplicationState, 
+    dispatch: Dispatch<any>, 
+    domainId : number
+) => {
+    const domain = appState.root.publicData.domains
+        .find(d => d.id == domainId);
+    const title = domain == undefined
+        ? undefined
+        : appState.root.publicData.titles
+            .find(t => t.rank == enTitleRank.Earl && t.capitalId == domain.id);    
+    if (domain == undefined || title == undefined)  
+    {
+        dispatch(publicDataActionCreators.loadDomain(domainId))
+        return (<>
+            <Spinner animation="border" role="status" size="sm"/>
+            Загрузка...
+        </>)
+    }
+    else {
+        return `- ${title.name}`;
+    }
+}
+
 const getInfo = (
     appState : ApplicationState, 
     dispatch: Dispatch<any>, 
@@ -116,6 +140,8 @@ const getInfo = (
             return getCharacterInfo(appState, dispatch, props.contentId);
         case enCardLinkLineType.Army:
             return getArmyInfo(appState, dispatch, props.contentId);
+        case enCardLinkLineType.Domain:
+            return getDomainInfo(appState, dispatch, props.contentId);
         default:
             return 'ОШИБКА: Неизвестый тип данных'
     }

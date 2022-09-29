@@ -36,6 +36,8 @@ const DomainCard: React.FC = () => {
     const ownerId = title.ownerId;
     if (ownerId == undefined)
         return ( <>ОШИБКА: Не удеаётся загрузить данные владельца</> )
+
+    dispatch(leftCanvasActionCreators.setContentForLeftCanvas(enContentType.Character, ownerId))
     
     return (
         <Card style={{ margin: 'auto' }}>

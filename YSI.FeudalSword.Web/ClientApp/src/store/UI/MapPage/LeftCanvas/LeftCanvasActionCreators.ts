@@ -1,6 +1,7 @@
 import { ApplicationState, AppThunkAction } from "../../..";
 import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
 import { requestService } from "../../../RequestService/RequestService";
+import { characterCardHelper } from "./Helpers/CharacterCardHelper";
 import { domainCardHelper } from "./Helpers/DomainCardHelper";
 import { LeftCanvasActions } from "./LeftCanvasReducer";
 import { enContentType } from "./LeftCanvasState";
@@ -47,12 +48,31 @@ const setCharacterForLeftCanvas = async (
     dispatch : (action: LeftCanvasActions) => void, 
     characterId: number
 ) => {
-    dispatch({ 
-        type: 'UI/MAPPAGE/LEFTCANVAS/SET_ERROR', 
-        error: 'В реализации... //TODO',
-        contentType: enContentType.Character,
-        contentId: characterId  
-    });
+    if (characterCardHelper.checkDataForCharacter(appState.root, characterId))
+    {
+        dispatch({ 
+            type: 'UI/MAPPAGE/LEFTCANVAS/IS_LOADED', 
+            contentType: enContentType.Character,
+            contentId: characterId
+        });
+        return;
+    }
+    const response = await requestService.characterController.get(appState, characterId);
+    if (response.success) {
+        dispatch({ 
+            type: 'UI/MAPPAGE/LEFTCANVAS/SET_CONTENT', 
+            contentType: enContentType.Character,
+            contentId: characterId,
+            publicData: response.data as IPublicDataApiModel
+        });
+    } else {
+        const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
+        dispatch({ type: 'UI/MAPPAGE/LEFTCANVAS/SET_ERROR', 
+            error,
+            contentType: enContentType.Character,
+            contentId: characterId
+        });
+    }
 }
 
 const setArmyForLeftCanvas = async (

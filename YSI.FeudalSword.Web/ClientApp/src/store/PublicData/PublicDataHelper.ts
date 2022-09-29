@@ -1,4 +1,4 @@
-import { IPublicArmy, IPublicCharacter, IPublicDataApiModel, IPublicDomain, IPublicDynasty, IPublicTitle, IPublicUnit, ISaga } from "../../models/IPublicDataApiModel"
+import { IPublicArmy, IPublicCharacter, IPublicDataApiModel, IPublicDomain, IPublicDynasty, IPublicTitle, IPublicUnit, IPublicUser, ISaga } from "../../models/IPublicDataApiModel"
 import { RootState } from "../Root";
 
 const reset = (appState : RootState, saga : ISaga) => {
@@ -82,6 +82,18 @@ const updateUnits = (appState : RootState, array : IPublicUnit[]) => {
     });
 }
 
+const updateUsers = (appState : RootState, array : IPublicUser[]) => {
+    array.forEach(item => {
+        let currentItem = appState.publicData.users.find(i => i.id == item.id);
+        if (currentItem == undefined) {
+            appState.publicData.users.push(item)
+        } else {
+            if (item.charactersIds != undefined)
+                currentItem.charactersIds = item.charactersIds;
+        }
+    });
+}
+
 const update = (appState : RootState, publicData : IPublicDataApiModel) => {
     if (appState.publicData.currentTurn.id != publicData.saga.turnNumber)
         reset(appState, publicData.saga);
@@ -97,6 +109,8 @@ const update = (appState : RootState, publicData : IPublicDataApiModel) => {
         updateDynasties(appState, publicData.dynasties)
     if (publicData.units != undefined)
         updateUnits(appState, publicData.units)
+    if (publicData.users != undefined)
+        updateUsers(appState, publicData.users)
 }
 
 

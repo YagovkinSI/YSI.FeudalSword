@@ -8,7 +8,8 @@ import { publicDataActionCreators } from "../../store/PublicData/PublicDataActio
 
 export enum enCardLinkLineType {
     Character = 1,
-    Army = 2
+    Army = 2,
+    Domain = 3
 }
 
 interface CardLinkLineProp {

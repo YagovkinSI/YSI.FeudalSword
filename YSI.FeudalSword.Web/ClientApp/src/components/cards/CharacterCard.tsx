@@ -1,64 +1,64 @@
-import * as React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { ApplicationState } from '../../store';
-import * as Characters from '../../store/Characters';
-import { Button, Card } from 'react-bootstrap';
-import { ICharacter } from '../../models/ICharacter';
+import React from "react";
+import { Card, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { enTitleRank } from "../../models/IPublicDataApiModel";
+import { ApplicationState } from "../../store";
+import { publicDataActionCreators } from "../../store/PublicData/PublicDataActionCreators";
+import { characterCardHelper } from "../../store/UI/MapPage/LeftCanvas/Helpers/CharacterCardHelper";
+import CardLinkLine, { enCardLinkLineType } from "../elements/CardLinkLine";
 
-const CharacterCard :  React.FC<ICharacter> = (character) => { 
-    const dispatch = useDispatch(); 
-
-    React.useEffect(() => {
-        dispatch(Characters.actionCreators.getMyCharacter())
-    });    
-    
+const CharacterCard : React.FC = () => {
+    const dispatch = useDispatch();
     const appState = useSelector(state => state as ApplicationState);
-    const userId = appState.root.authorization.user == undefined
-        ? undefined
-        : appState.root.authorization.user.id;
-    const characters = appState.characters == undefined 
-        ? undefined
-        : appState.characters.characters;   
-    const canTakeCharacter = characters == undefined || userId == undefined  
-        ? false
-        : appState.characters == undefined    
-            ? false
-            : !characters.some(c => c.userId == userId) 
 
-    const takeCharacter = () => {
-        dispatch(Characters.actionCreators.takeContol(character.id))
-    }
+    const characterId = appState.root.ui.mapPage.leftCanvas.contentId;    
+    if (characterId == undefined)
+        return ( <>ОШИБКА: Не определен идентификатор персонажа.</> )
+    
+    const state = characterCardHelper.checkDataForCharacter(appState.root, characterId);
+    React.useEffect(() => {
+        if (!state)
+            dispatch(publicDataActionCreators.loadCharacter(characterId))
+    });
+
+    if (!state)
+        return (
+            <>
+                <Spinner animation="border" role="status" size="sm"/>
+                Загрузка...
+            </>
+        )
+    
+    const title = state.character.suzerainId == undefined
+        ? 'Король'
+        : 'Лорд';
+
+    const lastName = state.dynasty == undefined
+        ? ''
+        : state.dynasty.name;
+    
+    const userName = state.user == undefined
+        ? 'НЕ ЗАНЯТ ИГРОКОМ'
+        : state.user.userName;
 
     return (
         <Card style={{ margin: 'auto' }}>
             <Card.Body>
-                <Card.Title>{character.name} {character.dynastyName}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                    Игрок - {character.userName != '' 
-                        ? character.userName
-                        : 'ОТСУТСТВУЕТ'}
-                </Card.Subtitle>
-                { character.userName == '' && canTakeCharacter
-                    ? <Button 
-                        onClick={takeCharacter}>
-                            ВЫБРАТЬ ЭТОГО ПЕРСОНАЖА
-                        </Button>
-                    : <></>
-                }
-                <Card.Text>
-                    Во владении персонажа:
-                </Card.Text>
-                <ul>
-                { character.titles.map(t => 
-                    <li key={t.id}>{t.name}</li>
-                )}
-                </ul>
+                <Card.Title>{title} {state.character.name} {lastName}</Card.Title>
+                <h6>Игрок: {userName}</h6>
+                <h6>Владения:</h6>
+                {state.titles
+                    .filter(t => t.rank == enTitleRank.Earl)
+                    .map(title => {
+                        return (<CardLinkLine 
+                            key={title.id}
+                            lineType={enCardLinkLineType.Domain} 
+                            contentId = {title.capitalId}
+                        />)  
+                    })}
             </Card.Body>
         </Card>
     )
-};
+}
 
-export default connect(
-    (state: ApplicationState) => state.characters,
-    Characters.actionCreators
-)(CharacterCard);
+export default CharacterCard; 

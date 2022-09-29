@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store';
 import { leftCanvasActionCreators } from '../../store/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
 import { enContentType } from '../../store/UI/MapPage/LeftCanvas/LeftCanvasState';
+import CharacterCard from '../cards/CharacterCard';
 import DomainCard from '../cards/DomainCard';
 
 const LeftCanvas :  React.FC = () => {    
@@ -43,11 +44,11 @@ const LeftCanvas :  React.FC = () => {
                 </>
         )
         else {
-            switch (state.contentType) {
+            switch (state.contentType) {                
                 case enContentType.Domain:
                     return (<DomainCard/>);
                 case enContentType.Character:
-                    return (<>//TODO</>);
+                    return (<CharacterCard/>);
                 case enContentType.Army:
                     return (<>//TODO</>);
                 default:

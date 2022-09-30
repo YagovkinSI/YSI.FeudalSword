@@ -1,10 +1,11 @@
 import React from "react";
-import { Card, Spinner } from "react-bootstrap";
+import { Button, Card, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { enTitleRank } from "../../models/IPublicDataApiModel";
 import { ApplicationState } from "../../store";
 import { publicDataActionCreators } from "../../store/PublicData/PublicDataActionCreators";
 import { characterCardHelper } from "../../store/UI/MapPage/LeftCanvas/Helpers/CharacterCardHelper";
+import { userCharacterActionCreators } from "../../store/UserData/Character/UserCharacterActionCreators";
 import CardLinkLine, { enCardLinkLineType } from "../elements/CardLinkLine";
 
 const CharacterCard : React.FC = () => {
@@ -41,11 +42,32 @@ const CharacterCard : React.FC = () => {
         ? 'НЕ ЗАНЯТ ИГРОКОМ'
         : state.user.userName;
 
+    const canTakeCharacter = appState.root.authorization.user != undefined &&
+        appState.root.userData.character.isChecked && 
+        appState.root.userData.character.characterId == undefined &&
+        state.user == undefined;
+    
+    const isUserCharacter = appState.root.authorization.user != undefined &&
+    appState.root.userData.character.isChecked && 
+    appState.root.userData.character.characterId == characterId;
+
+    const takeCharacter = () => {
+        dispatch(userCharacterActionCreators.takeCharacter(characterId))
+    }
+
     return (
         <Card style={{ margin: 'auto' }}>
             <Card.Body>
                 <Card.Title>{title} {state.character.name} {lastName}</Card.Title>
-                <h6>Игрок: {userName}</h6>
+                <h6>Игрок: { isUserCharacter ? `Ваш персонаж, ${userName}` :  userName}</h6>
+                { canTakeCharacter
+                    ? 
+                        <Button 
+                            onClick={takeCharacter}>
+                            ВЫБРАТЬ ЭТОГО ПЕРСОНАЖА
+                        </Button>
+                    : <></>
+                }
                 <h6>Владения:</h6>
                 {state.titles
                     .filter(t => t.rank == enTitleRank.Earl)

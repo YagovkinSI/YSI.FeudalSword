@@ -14,6 +14,7 @@ import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
 import { authorizationActionCreators } from './store/Authorization/AuthorizationActionCreators';
 import MapPage from './components/pages/MapPage';
+import { userCharacterActionCreators } from './store/UserData/Character/UserCharacterActionCreators';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -23,6 +24,10 @@ const App: React.FC = () => {
         if (!appState.root.authorization.isBusy &&
             !appState.root.authorization.isChecked)
             dispatch(authorizationActionCreators.getCurrentUser());
+        if (appState.root.authorization.user != undefined &&
+            !appState.root.userData.character.isBusy &&
+            !appState.root.userData.character.isChecked)
+            dispatch(userCharacterActionCreators.getUserCharacter());
     });    
     
     const isAuthorized = !appState.root.authorization.isBusy &&

@@ -1,5 +1,6 @@
 import { ICurrentUser } from "../../models/ICurrentUser";
 import { RootState } from "../Root";
+import { defaultUserDataState } from "../UserData/UserDataState";
 
 interface SetUser {
     type: 'AUTHORIZATION/SET_USER';
@@ -22,6 +23,8 @@ export const reducerAuthorization = (state : RootState, action : AuthorizationAc
 {
     switch (action.type) {  
         case 'AUTHORIZATION/SET_USER':
+            if (action.user == undefined)
+                state.userData = defaultUserDataState;
             return {
                 ...state,
                 authorization: {

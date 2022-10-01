@@ -15,7 +15,7 @@ export interface RootState {
     ui: UiState
 }
 
-const defaultRootState: RootState = { 
+const defaultRootState: RootState = {
     authorization: defaultAuthorizationState,
     publicData: defaultPublicDataState,
     userData: defaultUserDataState,
@@ -23,7 +23,7 @@ const defaultRootState: RootState = {
 };
 
 export const reducer: Reducer<RootState> = (
-    state: RootState = defaultRootState, 
+    state: RootState = defaultRootState,
     incomingAction: Action
 ): RootState => {
 
@@ -33,15 +33,15 @@ export const reducer: Reducer<RootState> = (
 
     newState = reducerUi(state, incomingAction);
     if (newState != undefined)
-        return newState; 
+        return newState;
 
     newState = reducerPublicData(state, incomingAction);
     if (newState != undefined)
-        return newState; 
+        return newState;
 
     newState = reducerUserData(state, incomingAction);
     if (newState != undefined)
-        return newState; 
-        
+        return newState;
+
     return state;
 };

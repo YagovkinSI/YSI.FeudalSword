@@ -25,13 +25,6 @@ const Home = () => (
       <li><a href='https://vk.com/topic-189975977_49044454'>Подробное описание процесса разработки</a> в группе ВК.</li>     
     </ul>
     <p></p>
-
-    <h3>Тестовые разделы на сайте:</h3>
-    <ul>
-      <li><NavLink tag={Link} className="text-dark" to="/counter">Счётчик - простой пример компонента React</NavLink></li>
-      <li><NavLink tag={Link} className="text-dark" to="/fetch-data">Загрузка данных - пример получения данных с сервера и работа с параметрами URL</NavLink></li>
-      <li><NavLink tag={Link} className="text-dark" to="/test">Тестовый запрос - тестирование запроса к серверу</NavLink></li>
-    </ul>
     
   </div>
 );

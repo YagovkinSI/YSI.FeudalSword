@@ -4,7 +4,7 @@ import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import { useState } from 'react';
 import { useLocation } from 'react-router';
 import { ApplicationState } from '../../store';
-import { authorizationActionCreators } from '../../store/Authorization/AuthorizationActionCreators';
+import { authorizationActionCreators } from '../../store/UserData/Authorization/AuthorizationActionCreators';
 
 const LoginRegister: React.FC = () => {
     const appState = useSelector(state => state as ApplicationState);
@@ -18,7 +18,7 @@ const LoginRegister: React.FC = () => {
     const [passwordError, setPasswordError] = useState('');    
     const [passwordConfirmError, setPasswordConfirmError] = useState('');
 
-    const isLoading = appState.root.authorization.isBusy;
+    const isLoading = appState.root.userData.authorization.isBusy;
     const isLogin = useLocation().pathname === "/login"
 
     const submit = (event: React.FormEvent<EventTarget>) => {

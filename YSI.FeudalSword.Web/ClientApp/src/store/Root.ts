@@ -1,6 +1,6 @@
 import { Action, Reducer } from "redux";
-import { AuthorizationActions, reducerAuthorization } from "./Authorization/AuthorizationReducer";
-import { AuthorizationState, defaultAuthorizationState } from "./Authorization/AuthorizationState";
+import { AuthorizationActions, reducerAuthorization } from "./UserData/Authorization/AuthorizationReducer";
+import { AuthorizationState, defaultAuthorizationState } from "./UserData/Authorization/AuthorizationState";
 import { reducerPublicData } from "./PublicData/PublicDataReducer";
 import { defaultPublicDataState, PublicDataState } from "./PublicData/PublicDataState";
 import { reducerUi } from "./UI/UiReducer";
@@ -8,17 +8,15 @@ import { UiState, defaultUiState } from "./UI/UiState";
 import { reducerUserData } from "./UserData/UserDataReducer";
 import { defaultUserDataState, UserDataState } from "./UserData/UserDataState";
 
-export interface RootState {
-    authorization: AuthorizationState,
+export interface RootState {   
+    userData: UserDataState, 
     publicData: PublicDataState,
-    userData: UserDataState,
     ui: UiState
 }
 
 const defaultRootState: RootState = {
-    authorization: defaultAuthorizationState,
-    publicData: defaultPublicDataState,
     userData: defaultUserDataState,
+    publicData: defaultPublicDataState,
     ui: defaultUiState
 };
 
@@ -27,11 +25,7 @@ export const reducer: Reducer<RootState> = (
     incomingAction: Action
 ): RootState => {
 
-    let newState = reducerAuthorization(state, incomingAction as AuthorizationActions);
-    if (newState != undefined)
-        return newState;
-
-    newState = reducerUi(state, incomingAction);
+    let newState = reducerUi(state, incomingAction);
     if (newState != undefined)
         return newState;
 

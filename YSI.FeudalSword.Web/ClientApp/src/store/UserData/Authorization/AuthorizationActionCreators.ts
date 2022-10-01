@@ -1,11 +1,11 @@
-import { AppThunkAction } from "..";
-import { requestService } from "../RequestService/RequestService";
+import { AppThunkAction } from "../..";
+import { requestService } from "../../RequestService/RequestService";
 import { AuthorizationActions } from "./AuthorizationReducer";
 
 const getCurrentUser = ()
 : AppThunkAction<AuthorizationActions> => async (dispatch, getState) => {
     const appState = getState();
-    if (appState.root.authorization.isBusy)
+    if (appState.root.userData.authorization.isBusy)
         return;
     dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.getCurrentUser(appState);
@@ -21,7 +21,7 @@ const getCurrentUser = ()
 const register = (userName: string, password: string, passwordConfirm: string)
 : AppThunkAction<AuthorizationActions> => async (dispatch, getState) => {
     const appState = getState();
-    if (appState.root.authorization.isBusy)
+    if (appState.root.userData.authorization.isBusy)
         return;
     dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.register(appState, userName, password, passwordConfirm);
@@ -38,7 +38,7 @@ const login = (userName: string, password: string)
 : AppThunkAction<AuthorizationActions> => 
 async (dispatch, getState) => {
     const appState = getState();
-    if (appState.root.authorization.isBusy)
+    if (appState.root.userData.authorization.isBusy)
         return;
     dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.login(appState, userName, password);
@@ -55,7 +55,7 @@ const logout = ()
 : AppThunkAction<AuthorizationActions> =>
 async (dispatch, getState) => {
     const appState = getState();
-    if (appState.root.authorization.isBusy)
+    if (appState.root.userData.authorization.isBusy)
         return;
     dispatch({ type: 'AUTHORIZATION/SET_BUSY' })
     const response = await requestService.userController.logout(appState);

@@ -42,12 +42,12 @@ const CharacterCard : React.FC = () => {
         ? 'НЕ ЗАНЯТ ИГРОКОМ'
         : state.user.userName;
 
-    const canTakeCharacter = appState.root.authorization.user != undefined &&
+    const canTakeCharacter = appState.root.userData.authorization.user != undefined &&
         appState.root.userData.character.isChecked && 
         appState.root.userData.character.characterId == undefined &&
         state.user == undefined;
     
-    const isUserCharacter = appState.root.authorization.user != undefined &&
+    const isUserCharacter = appState.root.userData.authorization.user != undefined &&
     appState.root.userData.character.isChecked && 
     appState.root.userData.character.characterId == characterId;
 

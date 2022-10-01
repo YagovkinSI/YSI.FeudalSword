@@ -5,7 +5,7 @@ import { ApplicationState } from '../../store';
 
 const ErrorField: React.FC = () => { 
     const appState = useSelector(state => state as ApplicationState);
-    const error = appState.root.authorization.error;
+    const error = appState.root.userData.authorization.error;
     
     if (error == undefined || error == '') {
         return (

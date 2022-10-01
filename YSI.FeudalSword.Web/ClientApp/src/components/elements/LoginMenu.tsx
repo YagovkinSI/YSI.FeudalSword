@@ -11,13 +11,13 @@ const LoginMenu :  React.FC = () => {
     const dispatch = useDispatch();   
     const appState = useSelector(state => state as ApplicationState);
 
-    const isLoading = appState.root.authorization.isBusy;
-    const isAuthorized = !appState.root.authorization.isBusy &&
-        appState.root.authorization.isChecked &&
-        appState.root.authorization.user != undefined;        
-    const userName = appState.root.authorization.user == undefined
+    const isLoading = appState.root.userData.authorization.isBusy;
+    const isAuthorized = !appState.root.userData.authorization.isBusy &&
+        appState.root.userData.authorization.isChecked &&
+        appState.root.userData.authorization.user != undefined;        
+    const userName = appState.root.userData.authorization.user == undefined
         ? ''
-        : appState.root.authorization.user.userName;
+        : appState.root.userData.authorization.user.userName;
     
     const loadingMenu = (
         <Fragment>

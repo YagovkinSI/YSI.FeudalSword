@@ -9,7 +9,7 @@ import { ApplicationState } from './store';
 import LoginRegister from './components/pages/LoginRegister';
 import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
-import { authorizationActionCreators } from './store/Authorization/AuthorizationActionCreators';
+import { authorizationActionCreators } from './store/UserData/Authorization/AuthorizationActionCreators';
 import MapPage from './components/pages/MapPage';
 import { userCharacterActionCreators } from './store/UserData/Character/UserCharacterActionCreators';
 
@@ -17,15 +17,15 @@ const App: React.FC = () => {
     const dispatch = useDispatch(); 
     const appState = useSelector(state => state as ApplicationState);
 
-    const isAuthorized = !appState.root.authorization.isBusy &&
-        appState.root.authorization.isChecked &&
-        appState.root.authorization.user != undefined;
+    const isAuthorized = !appState.root.userData.authorization.isBusy &&
+        appState.root.userData.authorization.isChecked &&
+        appState.root.userData.authorization.user != undefined;
 
     React.useEffect(() => {
-        if (!appState.root.authorization.isBusy &&
-            !appState.root.authorization.isChecked)
+        if (!appState.root.userData.authorization.isBusy &&
+            !appState.root.userData.authorization.isChecked)
             dispatch(authorizationActionCreators.getCurrentUser());
-        if (appState.root.authorization.user != undefined &&
+        if (appState.root.userData.authorization.user != undefined &&
             !appState.root.userData.character.isBusy &&
             !appState.root.userData.character.isChecked)
             dispatch(userCharacterActionCreators.getUserCharacter());

@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
 import { publicDataHelper } from "../../../PublicData/PublicDataHelper";
 import { RootState } from "../../../Root";
@@ -35,9 +36,12 @@ interface IsLoaded {
 
 export type LeftCanvasActions = Close | SetContent | SetError | SetBusy | IsLoaded;
 
-export const reducerLeftCanvas = (state : RootState, action : LeftCanvasActions) 
+export const reducerLeftCanvas = (state : RootState, incomingAction : Action) 
 : RootState | undefined => 
 {
+    const action = incomingAction as LeftCanvasActions;
+    if (action == undefined)
+        return undefined; 
     switch (action.type) {  
         case 'UI/MAPPAGE/LEFTCANVAS/CLOSE':
             return {

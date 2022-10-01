@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import { ICurrentTurn } from "../../../models/ICurrentTurn";
 import { RootState } from "../../Root"
 
@@ -17,8 +18,11 @@ interface SetError {
 
 export type CurrentTurnActions = SetBusy | SetCurrentTurn | SetError;
 
-export const reducerCurrentTurn = (state: RootState, action: CurrentTurnActions )
+export const reducerCurrentTurn = (state: RootState, incomingAction: Action )
 : RootState | undefined => {
+    const action = incomingAction as CurrentTurnActions;
+    if (action == undefined)
+        return undefined; 
     switch (action.type) {
         case "PUBLIC_DATA/CURRENT_TURN/SET_BUSY":
             return {

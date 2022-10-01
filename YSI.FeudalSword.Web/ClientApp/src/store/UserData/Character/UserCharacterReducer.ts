@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import { RootState } from "../../Root";
 
 
@@ -17,9 +18,12 @@ interface SetError {
 
 export type UserCharacterActions = SetCharacter | SetBusy | SetError;
 
-export const reducerUserCharacter = (state: RootState, action: UserCharacterActions )
+export const reducerUserCharacter = (state: RootState, incomingAction: Action )
 : RootState | undefined => {
 
+    const action = incomingAction as  UserCharacterActions;
+    if (action == undefined)
+        return undefined; 
     switch (action.type) {  
         case 'USER_DATA/CHARACTER/SET_CHARACTER':
             return {

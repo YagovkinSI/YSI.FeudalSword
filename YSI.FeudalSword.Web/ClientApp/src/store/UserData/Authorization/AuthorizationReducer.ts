@@ -1,3 +1,4 @@
+import { Action } from "redux";
 import { ICurrentUser } from "../../../models/ICurrentUser";
 import { RootState } from "../../Root";
 import { defaultUserDataState } from "../UserDataState";
@@ -18,9 +19,12 @@ interface SetError {
 
 export type AuthorizationActions = SetUser | SetBusy | SetError;
 
-export const reducerAuthorization = (state : RootState, action : AuthorizationActions) 
+export const reducerAuthorization = (state : RootState, incomingAction : Action) 
 : RootState | undefined => 
 {
+    const action = incomingAction as  AuthorizationActions;
+    if (action == undefined)
+        return undefined; 
     switch (action.type) {  
         case 'AUTHORIZATION/SET_USER':
             if (action.user == undefined)

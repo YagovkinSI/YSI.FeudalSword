@@ -17,23 +17,19 @@ interface LoadedData {
 
 export type PublicDataActions = LoadData | LoadedData;
 
-export const reducerPublicData = (state: RootState, action: Action )
+export const reducerPublicData = (state: RootState, incomingAction: Action )
 : RootState | undefined => {
-    let newState = reducerCurrentTurn(state, action as CurrentTurnActions);
-    if (newState != undefined)
-        return newState;
-
-    const publicDataAction = action as PublicDataActions;
-    if (publicDataAction == undefined)
+    const action = incomingAction as PublicDataActions;
+    if (action == undefined)
         return undefined; 
 
-    switch (publicDataAction.type) {
+    switch (action.type) {
         case "PUBLIC_DATA/LOAD_DATA":
-            if (state.publicData.loadings.includes(publicDataAction.loadingId))
+            if (state.publicData.loadings.includes(action.loadingId))
                 return state;
             else {
                 let newLoadings = state.publicData.loadings.slice();
-                newLoadings.push(publicDataAction.loadingId);
+                newLoadings.push(action.loadingId);
                 return {
                     ...state,
                     publicData: {
@@ -43,11 +39,11 @@ export const reducerPublicData = (state: RootState, action: Action )
                 }
             }
         case "PUBLIC_DATA/LOADED_DATA":
-            if (!state.publicData.loadings.includes(publicDataAction.loadingId))
+            if (!state.publicData.loadings.includes(action.loadingId))
                 return state;
-            publicDataHelper.update(state, publicDataAction.publicData);
+            publicDataHelper.update(state, action.publicData);
             let newLoadings = state.publicData.loadings
-                .filter(l => l != publicDataAction.loadingId);
+                .filter(l => l != action.loadingId);
             return {
                 ...state,
                 publicData: {
@@ -55,7 +51,10 @@ export const reducerPublicData = (state: RootState, action: Action )
                     loadings: newLoadings
                 }
             }
-    }
-
-        
+    }  
 }
+
+export const publicDataReducers = [
+    reducerCurrentTurn,
+    reducerPublicData
+]

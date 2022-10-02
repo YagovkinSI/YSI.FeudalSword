@@ -2,6 +2,7 @@ import { Action } from "redux";
 import { defaultUserDataState } from "..";
 import { RootState } from "../..";
 import { ICurrentUser } from "../../../../models/ICurrentUser";
+import { AuthorizationState } from "./AuthorizationState";
 
 interface SetUser {
     type: 'AUTHORIZATION/SET_USER';
@@ -19,54 +20,37 @@ interface SetError {
 
 export type AuthorizationActions = SetUser | SetBusy | SetError;
 
-const setUser = (state : RootState, action : SetUser)
-: RootState => {
-    if (action.user == undefined)
-        state.userData = defaultUserDataState;
-    return {
-        ...state,
-        userData: {
-            ...state.userData,
-            authorization: {
-                ...state.userData.authorization,
-                isChecked: true,
-                isBusy: false,
-                error: undefined,
-                user: action.user
-            }
-        }
+const setUser = (locaState : AuthorizationState, action : SetUser)
+: AuthorizationState => {
+    locaState = {
+        ...locaState,
+        isChecked: true,
+        isBusy: false,
+        error: undefined,
+        user: action.user
     }
+    return locaState;
 }
 
-const setBusy = (state : RootState, action : SetBusy)
-: RootState => {
-    return {
-        ...state,
-        userData: {
-            ...state.userData,
-            authorization: {
-                ...state.userData.authorization,
-                isBusy: true
-            }                    
-        }                    
+const setBusy = (locaState : AuthorizationState, action : SetBusy)
+: AuthorizationState => {
+    locaState = {
+        ...locaState,
+        isBusy: true
     }
+    return locaState;
 }
 
-const setError = (state : RootState, action : SetError)
-: RootState => {
-    return {
-        ...state,
-        userData: {
-            ...state.userData,
-            authorization: {
-                ...state.userData.authorization,
-                isChecked: true,
-                isBusy: false,
-                user: undefined,
-                error: action.error
-            }                    
-        } 
+const setError = (locaState : AuthorizationState, action : SetError)
+: AuthorizationState => {
+    locaState = {
+        ...locaState,
+        isChecked: true,
+        isBusy: false,
+        user: undefined,
+        error: action.error
     }
+    return locaState;
 }
 
 export const reducerAuthorization = (state : RootState, incomingAction : Action) 
@@ -75,13 +59,21 @@ export const reducerAuthorization = (state : RootState, incomingAction : Action)
     const action = incomingAction as  AuthorizationActions;
     if (action == undefined)
         return undefined; 
+    
+    let newState = { ...state };
+    let localState = newState.userData.authorization;
     switch (action.type) {  
-        case 'AUTHORIZATION/SET_USER':
-            return setUser(state, action);
+        case 'AUTHORIZATION/SET_USER':         
+            if (action.user == undefined) 
+                newState.userData = defaultUserDataState;            
+            newState.userData.authorization = setUser(localState, action);   
+            return newState;
         case 'AUTHORIZATION/SET_BUSY':
-            return setBusy(state, action);
+            newState.userData.authorization = setBusy(localState, action);
+            return newState;
         case 'AUTHORIZATION/SET_ERROR':
-            return setError(state, action);
+            newState.userData.authorization = setError(localState, action);
+            return newState;
         default:
             return undefined;             
     }

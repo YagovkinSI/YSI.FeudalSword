@@ -1,5 +1,6 @@
 import { Action } from "redux";
 import { RootState } from "../..";
+import { IUserChatacterState } from "./UserChatacterState";
 
 
 interface SetCharacter {
@@ -18,51 +19,33 @@ interface SetError {
 
 export type UserCharacterActions = SetCharacter | SetBusy | SetError;
 
-const setCharacter = (state : RootState, action : SetCharacter)
-: RootState => {
+const setCharacter = (localState : IUserChatacterState, action : SetCharacter)
+: IUserChatacterState => {
     return {
-        ...state,
-        userData: {
-            ...state.userData,
-            character: {
-                ...state.userData.character,
-                isChecked: true,
-                isBusy: false,
-                error: undefined,
-                characterId: action.characterId
-            }
-        }
+        ...localState,
+        isChecked: true,
+        isBusy: false,
+        error: undefined,
+        characterId: action.characterId
     }
 }
 
-const setBusy = (state : RootState, action : SetBusy)
-: RootState => {
+const setBusy = (localState : IUserChatacterState, action : SetBusy)
+: IUserChatacterState => {
     return {
-        ...state,
-        userData: {
-            ...state.userData,
-            character: {
-                ...state.userData.character,
-                isBusy: true
-            }
-        }
+        ...localState,
+        isBusy: true
     }
 }
 
-const setError = (state : RootState, action : SetError)
-: RootState => {
+const setError = (localState : IUserChatacterState, action : SetError)
+: IUserChatacterState => {
     return {
-        ...state,
-        userData: {
-            ...state.userData,
-            character: {
-                ...state.userData.character,
-                isChecked: true,
-                isBusy: false,
-                characterId: undefined,
-                error: action.error
-            }
-        }
+        ...localState,
+        isChecked: true,
+        isBusy: false,
+        characterId: undefined,
+        error: action.error
     }
 }
 
@@ -72,13 +55,19 @@ export const reducerUserCharacter = (state: RootState, incomingAction: Action )
     const action = incomingAction as  UserCharacterActions;
     if (action == undefined)
         return undefined; 
+
+    let newState = { ...state };
+    let localState = newState.userData.character;
     switch (action.type) {  
         case 'USER_DATA/CHARACTER/SET_CHARACTER':
-            return setCharacter(state, action);
+            newState.userData.character = setCharacter(localState, action);
+            return newState;
         case 'USER_DATA/CHARACTER/SET_BUSY':
-            return setBusy(state, action);
+            newState.userData.character =  setBusy(localState, action);
+            return newState;
         case 'USER_DATA/CHARACTER/SET_ERROR':
-            return setError(state, action);
+            newState.userData.character =  setError(localState, action);
+            return newState;
         default:
             return undefined;             
     }

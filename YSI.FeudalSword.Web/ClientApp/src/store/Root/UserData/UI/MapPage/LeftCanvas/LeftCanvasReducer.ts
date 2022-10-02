@@ -2,7 +2,7 @@ import { Action } from "redux";
 import { RootState } from "../../../..";
 import { IPublicDataApiModel } from "../../../../../../models/IPublicDataApiModel";
 import { publicDataHelper } from "../../../../PublicData/Base/PublicDataHelper";
-import { enContentType } from "./LeftCanvasState";
+import { enContentType, LeftCanvasState } from "./LeftCanvasState";
 
 interface Close {
     type: 'UI/MAPPAGE/LEFTCANVAS/CLOSE'
@@ -36,123 +36,55 @@ interface IsLoaded {
 
 export type LeftCanvasActions = Close | SetContent | SetError | SetBusy | IsLoaded;
 
-const close = (state : RootState, action : Close)
-: RootState => {
-    return {
-        ...state,
-        userData: {
-            ...state.userData,
-            ui: {
-                ...state.userData.ui,
-                mapPage: {
-                    ...state.userData.ui.mapPage,
-                    leftCanvas: {
-                        ...state.userData.ui.mapPage.leftCanvas,
-                        isOpen: false
-                    }
-                }
-            }
-        }
-    } 
+const close = (localState : LeftCanvasState, action : Close)
+: LeftCanvasState => {
+    localState = {
+        ...localState,
+        isOpen: false
+    }
+    return localState;
 }
 
-const setContent = (state : RootState, action : SetContent)
-: RootState => {
-    const requestContentId = `${action.contentType}_${action.contentId}`;
-    publicDataHelper.update(state, action.publicData)
-    if (state.userData.ui.mapPage.leftCanvas.isBusy != requestContentId)
-        return state;
+const setContent = (localState : LeftCanvasState, action : SetContent)
+: LeftCanvasState => {
+    localState = {
+        ...localState,
+        isBusy: undefined
+    }
+    return localState;
+}
+
+const setError = (localState : LeftCanvasState, action : SetError)
+: LeftCanvasState => {
     return {
-        ...state,
-        userData: {
-            ...state.userData,
-            ui: {
-                ...state.userData.ui,
-                mapPage: {
-                    ...state.userData.ui.mapPage,
-                    leftCanvas: {
-                        ...state.userData.ui.mapPage.leftCanvas,
-                        isBusy: undefined
-                    }
-                }
-            }
-        }
+        ...localState,
+        isBusy: undefined,
+        error: action.error
     }
 }
 
-const setError = (state : RootState, action : SetError)
-: RootState => {
-    const requestErrorId = `${action.contentType}_${action.contentId}`;
-    if (state.userData.ui.mapPage.leftCanvas.isBusy != requestErrorId)
-        return state;
-    return {
-        ...state,
-        userData: {
-            ...state.userData,
-            ui: {
-                ...state.userData.ui,
-                mapPage: {
-                    ...state.userData.ui.mapPage,
-                    leftCanvas: {
-                        ...state.userData.ui.mapPage.leftCanvas,
-                        isBusy: undefined,
-                        error: action.error
-                    }
-                }
-            }
-        }
-    }
-}
-
-const setBusy = (state : RootState, action : SetBusy)
-: RootState => {
+const setBusy = (localState : LeftCanvasState, action : SetBusy)
+: LeftCanvasState => {
     const requestBusyId = `${action.contentType}_${action.contentId}`;
     return {
-        ...state,
-        userData: {
-            ...state.userData,
-            ui: {
-                ...state.userData.ui,
-                mapPage: {
-                    ...state.userData.ui.mapPage,
-                    leftCanvas: {
-                        ...state.userData.ui.mapPage.leftCanvas,
-                        isBusy: requestBusyId,
-                        isOpen: true,
-                        error: undefined,
-                        contentType: action.contentType,
-                        contentId: action.contentId
-                    }
-                }
-            }
-        }
+        ...localState,
+        isBusy: requestBusyId,
+        isOpen: true,
+        error: undefined,
+        contentType: action.contentType,
+        contentId: action.contentId
     }
 }
 
-const isLoaded = (state : RootState, action : IsLoaded)
-: RootState => {
-    const requestIsLoadedId = `${action.contentType}_${action.contentId}`;
-    if (state.userData.ui.mapPage.leftCanvas.isBusy != requestIsLoadedId)
-        return state;
+const isLoaded = (localState : LeftCanvasState, action : IsLoaded)
+: LeftCanvasState => {
     return {
-        ...state,
-        userData: {
-            ...state.userData,
-            ui: {
-                ...state.userData.ui,
-                mapPage: {
-                    ...state.userData.ui.mapPage,
-                    leftCanvas: {
-                        ...state.userData.ui.mapPage.leftCanvas,
-                        isBusy: undefined,
-                        isOpen: true,
-                        error: undefined,
-                        contentType: action.contentType,
-                        contentId: action.contentId
-                    }
-                }
-            }
-        }
+        ...localState,
+        isBusy: undefined,
+        isOpen: true,
+        error: undefined,
+        contentType: action.contentType,
+        contentId: action.contentId
     }
 }
 
@@ -162,17 +94,35 @@ export const reducerLeftCanvas = (state : RootState, incomingAction : Action)
     const action = incomingAction as LeftCanvasActions;
     if (action == undefined)
         return undefined; 
+
+    let newState = { ...state };
+    let localState = newState.userData.ui.mapPage.leftCanvas;
     switch (action.type) {  
         case 'UI/MAPPAGE/LEFTCANVAS/CLOSE':
-            return close(state, action);
+            newState.userData.ui.mapPage.leftCanvas = close(localState, action);
+            return newState;
         case 'UI/MAPPAGE/LEFTCANVAS/SET_CONTENT':
-            return setContent(state, action);
+            const requestContentId = `${action.contentType}_${action.contentId}`;
+            publicDataHelper.update(state, action.publicData)
+            if (state.userData.ui.mapPage.leftCanvas.isBusy != requestContentId)
+                return state;
+            newState.userData.ui.mapPage.leftCanvas = setContent(localState, action);
+            return newState;
         case 'UI/MAPPAGE/LEFTCANVAS/SET_ERROR':
-            return setError(state, action);
+            const requestErrorId = `${action.contentType}_${action.contentId}`;
+            if (state.userData.ui.mapPage.leftCanvas.isBusy != requestErrorId)
+                return state;
+            newState.userData.ui.mapPage.leftCanvas = setError(localState, action);
+            return newState;
         case 'UI/MAPPAGE/LEFTCANVAS/SET_BUSY':
-            return setBusy(state, action);
+            newState.userData.ui.mapPage.leftCanvas = setBusy(localState, action);
+            return newState;
         case 'UI/MAPPAGE/LEFTCANVAS/IS_LOADED':
-            return isLoaded(state, action);
+            const requestIsLoadedId = `${action.contentType}_${action.contentId}`;
+            if (state.userData.ui.mapPage.leftCanvas.isBusy != requestIsLoadedId)
+                return state;
+            newState.userData.ui.mapPage.leftCanvas = isLoaded(localState, action);
+            return newState;
         default:
             return undefined;             
     }

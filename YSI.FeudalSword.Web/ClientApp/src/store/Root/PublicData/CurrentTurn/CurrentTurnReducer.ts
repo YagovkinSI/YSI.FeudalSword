@@ -18,6 +18,56 @@ interface SetError {
 
 export type CurrentTurnActions = SetBusy | SetCurrentTurn | SetError;
 
+const setBusy = (state : RootState, action : SetBusy)
+: RootState => {
+    return {
+        ...state,
+        publicData: {
+            ...state.publicData,
+            currentTurn: {
+                ...state.publicData.currentTurn,
+                isBusy: true,
+                error: undefined,
+                isChecked: true
+            }
+        }
+    }
+}
+
+const setCurrentTurn = (state : RootState, action : SetCurrentTurn)
+: RootState => {
+    return {
+        ...state,
+        publicData: {
+            ...state.publicData,
+            currentTurn: {
+                ...state.publicData.currentTurn,
+                id: action.currentTurn.id,
+                isBusy: false,
+                error: undefined,
+                isChecked: true,
+                status: action.currentTurn.status
+            }
+        }
+    }
+}
+
+const setError = (state : RootState, action : SetError)
+: RootState => {
+    return {
+        ...state,
+        publicData: {
+            ...state.publicData,
+            currentTurn: {
+                ...state.publicData.currentTurn,
+                error: action.error,
+                isBusy: false,
+                isChecked: true
+            }
+        }
+    }
+}
+
 export const reducerCurrentTurn = (state: RootState, incomingAction: Action )
 : RootState | undefined => {
     const action = incomingAction as CurrentTurnActions;
@@ -25,45 +75,10 @@ export const reducerCurrentTurn = (state: RootState, incomingAction: Action )
         return undefined; 
     switch (action.type) {
         case "PUBLIC_DATA/CURRENT_TURN/SET_BUSY":
-            return {
-                ...state,
-                publicData: {
-                    ...state.publicData,
-                    currentTurn: {
-                        ...state.publicData.currentTurn,
-                        isBusy: true,
-                        error: undefined,
-                        isChecked: true
-                    }
-                }
-            }
+            return setBusy(state, action);
         case "PUBLIC_DATA/CURRENT_TURN/SET_CURRENT_TURN":
-            return {
-                ...state,
-                publicData: {
-                    ...state.publicData,
-                    currentTurn: {
-                        ...state.publicData.currentTurn,
-                        id: action.currentTurn.id,
-                        isBusy: false,
-                        error: undefined,
-                        isChecked: true,
-                        status: action.currentTurn.status
-                    }
-                }
-            }
+            return setCurrentTurn(state, action);
         case "PUBLIC_DATA/CURRENT_TURN/SET_ERROR":
-            return {
-                ...state,
-                publicData: {
-                    ...state.publicData,
-                    currentTurn: {
-                        ...state.publicData.currentTurn,
-                        error: action.error,
-                        isBusy: false,
-                        isChecked: true
-                    }
-                }
-            }
+            return setError(state, action);
     }
 }

@@ -16,6 +16,39 @@ interface LoadedData {
 
 export type PublicDataActions = LoadData | LoadedData;
 
+const loadData = (state : RootState, action : LoadData)
+: RootState => {
+    if (state.publicData.loadings.includes(action.loadingId))
+        return state;
+    else {
+        let newLoadings = state.publicData.loadings.slice();
+        newLoadings.push(action.loadingId);
+        return {
+            ...state,
+            publicData: {
+                ...state.publicData,
+                loadings: newLoadings
+            }
+        }
+    }
+}
+
+const loadedData = (state : RootState, action : LoadedData)
+: RootState => {
+    if (!state.publicData.loadings.includes(action.loadingId))
+        return state;
+    publicDataHelper.update(state, action.publicData);
+    let newLoadings = state.publicData.loadings
+        .filter(l => l != action.loadingId);
+    return {
+        ...state,
+        publicData: {
+            ...state.publicData,
+            loadings: newLoadings
+        }
+    }
+}
+
 export const reducerPublicData = (state: RootState, incomingAction: Action )
 : RootState | undefined => {
     const action = incomingAction as PublicDataActions;
@@ -24,31 +57,8 @@ export const reducerPublicData = (state: RootState, incomingAction: Action )
 
     switch (action.type) {
         case "PUBLIC_DATA/LOAD_DATA":
-            if (state.publicData.loadings.includes(action.loadingId))
-                return state;
-            else {
-                let newLoadings = state.publicData.loadings.slice();
-                newLoadings.push(action.loadingId);
-                return {
-                    ...state,
-                    publicData: {
-                        ...state.publicData,
-                        loadings: newLoadings
-                    }
-                }
-            }
+            return loadData(state, action);
         case "PUBLIC_DATA/LOADED_DATA":
-            if (!state.publicData.loadings.includes(action.loadingId))
-                return state;
-            publicDataHelper.update(state, action.publicData);
-            let newLoadings = state.publicData.loadings
-                .filter(l => l != action.loadingId);
-            return {
-                ...state,
-                publicData: {
-                    ...state.publicData,
-                    loadings: newLoadings
-                }
-            }
+            return loadedData(state, action);
     }  
 }

@@ -18,6 +18,54 @@ interface SetError {
 
 export type UserCharacterActions = SetCharacter | SetBusy | SetError;
 
+const setCharacter = (state : RootState, action : SetCharacter)
+: RootState => {
+    return {
+        ...state,
+        userData: {
+            ...state.userData,
+            character: {
+                ...state.userData.character,
+                isChecked: true,
+                isBusy: false,
+                error: undefined,
+                characterId: action.characterId
+            }
+        }
+    }
+}
+
+const setBusy = (state : RootState, action : SetBusy)
+: RootState => {
+    return {
+        ...state,
+        userData: {
+            ...state.userData,
+            character: {
+                ...state.userData.character,
+                isBusy: true
+            }
+        }
+    }
+}
+
+const setError = (state : RootState, action : SetError)
+: RootState => {
+    return {
+        ...state,
+        userData: {
+            ...state.userData,
+            character: {
+                ...state.userData.character,
+                isChecked: true,
+                isBusy: false,
+                characterId: undefined,
+                error: action.error
+            }
+        }
+    }
+}
+
 export const reducerUserCharacter = (state: RootState, incomingAction: Action )
 : RootState | undefined => {
 
@@ -26,44 +74,11 @@ export const reducerUserCharacter = (state: RootState, incomingAction: Action )
         return undefined; 
     switch (action.type) {  
         case 'USER_DATA/CHARACTER/SET_CHARACTER':
-            return {
-                ...state,
-                userData: {
-                    ...state.userData,
-                    character: {
-                        ...state.userData.character,
-                        isChecked: true,
-                        isBusy: false,
-                        error: undefined,
-                        characterId: action.characterId
-                    }
-                }
-            }
+            return setCharacter(state, action);
         case 'USER_DATA/CHARACTER/SET_BUSY':
-            return {
-                ...state,
-                userData: {
-                    ...state.userData,
-                    character: {
-                        ...state.userData.character,
-                        isBusy: true
-                    }
-                }
-            }
+            return setBusy(state, action);
         case 'USER_DATA/CHARACTER/SET_ERROR':
-            return {
-                ...state,
-                userData: {
-                    ...state.userData,
-                    character: {
-                        ...state.userData.character,
-                        isChecked: true,
-                        isBusy: false,
-                        characterId: undefined,
-                        error: action.error
-                    }
-                }
-            }
+            return setError(state, action);
         default:
             return undefined;             
     }

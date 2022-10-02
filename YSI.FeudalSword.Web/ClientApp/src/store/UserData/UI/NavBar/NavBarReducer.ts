@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { RootState } from "../../Root";
+import { RootState } from "../../../Root";
 
 interface Close {
     type: 'UI/NAVBAR/CLOSE'
@@ -19,20 +19,26 @@ export const reducerNavBar = (state : RootState, incomingAction : Action)
         case 'UI/NAVBAR/CLOSE':
             return {
                 ...state,
-                ui: {
-                    ...state.ui,
-                    navBar: {
-                        isOpen: false
+                userData: {
+                    ...state.userData,
+                    ui: {
+                        ...state.userData.ui,
+                        navBar: {
+                            isOpen: false
+                        }
                     }
                 }
             } 
         case 'UI/NAVBAR/TOGGLE':
             return {
                 ...state,
-                ui: {
-                    ...state.ui,
-                    navBar: {
-                        isOpen: !state.ui.navBar.isOpen
+                userData: {
+                    ...state.userData,
+                    ui: {
+                        ...state.userData.ui,
+                        navBar: {
+                            isOpen: !state.userData.ui.navBar.isOpen
+                        }
                     }
                 }
             }

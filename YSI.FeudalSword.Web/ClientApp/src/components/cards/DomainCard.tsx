@@ -3,15 +3,15 @@ import { Card, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { enTitleRank } from '../../models/IPublicDataApiModel';
 import { ApplicationState } from '../../store';
-import { domainCardHelper } from '../../store/UI/MapPage/LeftCanvas/Helpers/DomainCardHelper';
-import { leftCanvasActionCreators } from '../../store/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
-import { enContentType } from '../../store/UI/MapPage/LeftCanvas/LeftCanvasState';
+import { domainCardHelper } from '../../store/UserData/UI/MapPage/LeftCanvas/Helpers/DomainCardHelper';
+import { leftCanvasActionCreators } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
+import { enContentType } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasState';
 import CardLinkLine, { enCardLinkLineType } from '../elements/CardLinkLine';
 
 const DomainCard: React.FC = () => { 
     const dispatch = useDispatch(); 
     const appState = useSelector(state => state as ApplicationState);
-    const domainId = appState.root.ui.mapPage.leftCanvas.contentId;
+    const domainId = appState.root.userData.ui.mapPage.leftCanvas.contentId;
     if (domainId == undefined)
         return ( <>ОШИБКА: Не определен идентификатор владения.</> )
 

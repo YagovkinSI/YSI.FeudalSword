@@ -1,13 +1,16 @@
 import { AuthorizationState, defaultAuthorizationState } from "./Authorization/AuthorizationState"
 import { defaultChatacterState, IUserChatacterState } from "./Character/UserChatacterState"
+import { defaultUiState, UiState } from "./UI/UiState"
 
 export interface UserDataState {
     authorization: AuthorizationState,
-    character: IUserChatacterState
+    character: IUserChatacterState,    
+    ui: UiState
 }
 
 export const defaultUserDataState : UserDataState = {
     authorization: defaultAuthorizationState,
-    character: defaultChatacterState
+    character: defaultChatacterState,
+    ui: defaultUiState
 }
 

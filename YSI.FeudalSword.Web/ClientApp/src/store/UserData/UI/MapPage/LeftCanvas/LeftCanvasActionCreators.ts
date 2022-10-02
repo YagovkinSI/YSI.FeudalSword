@@ -1,6 +1,6 @@
-import { ApplicationState, AppThunkAction } from "../../..";
-import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
-import { requestService } from "../../../RequestService/RequestService";
+import { ApplicationState, AppThunkAction } from "../../../..";
+import { IPublicDataApiModel } from "../../../../../models/IPublicDataApiModel";
+import { requestService } from "../../../../RequestService/RequestService";
 import { characterCardHelper } from "./Helpers/CharacterCardHelper";
 import { domainCardHelper } from "./Helpers/DomainCardHelper";
 import { LeftCanvasActions } from "./LeftCanvasReducer";

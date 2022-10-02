@@ -1,4 +1,4 @@
-import { AppThunkAction } from "../..";
+import { AppThunkAction } from "../../..";
 import { NavBarActions } from "./NavBarReducer";
 
 const closeNavBarMenu = ()

@@ -1,5 +1,5 @@
-import { IPublicCharacter, IPublicDynasty, IPublicTitle, IPublicUser } from "../../../../../models/IPublicDataApiModel";
-import { RootState } from "../../../../Root"
+import { IPublicCharacter, IPublicDynasty, IPublicTitle, IPublicUser } from "../../../../../../models/IPublicDataApiModel";
+import { RootState } from "../../../../../Root"
 
 export interface CharacterCardData {
     character: IPublicCharacter,

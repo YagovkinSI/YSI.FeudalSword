@@ -1,21 +1,18 @@
 import { Action, Reducer } from "redux";
 import { publicDataReducers } from "./PublicData/PublicDataReducer";
 import { defaultPublicDataState, PublicDataState } from "./PublicData/PublicDataState";
-import { uiReducers } from "./UI/UiReducer";
-import { UiState, defaultUiState } from "./UI/UiState";
+import { uiReducers } from "./UserData/UI/UiReducer";
 import { defaultUserDataState, UserDataState } from "./UserData/UserDataState";
 import { userDataReducers } from "./UserData/UserDataReducer";
 
 export interface RootState {   
     userData: UserDataState, 
-    publicData: PublicDataState,
-    ui: UiState
+    publicData: PublicDataState
 }
 
 const defaultRootState: RootState = {
     userData: defaultUserDataState,
-    publicData: defaultPublicDataState,
-    ui: defaultUiState
+    publicData: defaultPublicDataState
 };
 
 export const reducer: Reducer<RootState> = (
@@ -34,7 +31,6 @@ export const reducer: Reducer<RootState> = (
 };
 
 const reducers = [
-    ...uiReducers, 
     ...publicDataReducers, 
     ...userDataReducers
 ]

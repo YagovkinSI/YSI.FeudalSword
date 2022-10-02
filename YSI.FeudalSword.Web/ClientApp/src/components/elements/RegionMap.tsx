@@ -2,8 +2,8 @@ import * as React from 'react';
 import map1j from '../../svg/map1';
 import {SVGMap} from 'react-svg-map';
 import '../../svg/index.css';
-import { leftCanvasActionCreators } from '../../store/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
-import { enContentType } from '../../store/UI/MapPage/LeftCanvas/LeftCanvasState';
+import { leftCanvasActionCreators } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
+import { enContentType } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasState';
 import { useDispatch } from 'react-redux';
 
 const RegionMap :  React.FC = () => {

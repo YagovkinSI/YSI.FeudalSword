@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { enTitleRank } from "../../models/IPublicDataApiModel";
 import { ApplicationState } from "../../store";
 import { publicDataActionCreators } from "../../store/PublicData/PublicDataActionCreators";
-import { characterCardHelper } from "../../store/UI/MapPage/LeftCanvas/Helpers/CharacterCardHelper";
+import { characterCardHelper } from "../../store/UserData/UI/MapPage/LeftCanvas/Helpers/CharacterCardHelper";
 import { userCharacterActionCreators } from "../../store/UserData/Character/UserCharacterActionCreators";
 import CardLinkLine, { enCardLinkLineType } from "../elements/CardLinkLine";
 
@@ -12,7 +12,7 @@ const CharacterCard : React.FC = () => {
     const dispatch = useDispatch();
     const appState = useSelector(state => state as ApplicationState);
 
-    const characterId = appState.root.ui.mapPage.leftCanvas.contentId;    
+    const characterId = appState.root.userData.ui.mapPage.leftCanvas.contentId;    
     if (characterId == undefined)
         return ( <>ОШИБКА: Не определен идентификатор персонажа.</> )
     

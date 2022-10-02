@@ -1,6 +1,6 @@
 import { Action } from "redux";
-import { ICurrentTurn } from "../../../models/ICurrentTurn";
-import { RootState } from "../../Root"
+import { RootState } from "../..";
+import { ICurrentTurn } from "../../../../models/ICurrentTurn";
 
 interface SetBusy {
     type: 'PUBLIC_DATA/CURRENT_TURN/SET_BUSY'

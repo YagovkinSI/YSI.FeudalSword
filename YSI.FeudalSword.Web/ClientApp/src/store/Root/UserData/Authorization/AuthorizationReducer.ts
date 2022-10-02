@@ -1,7 +1,7 @@
 import { Action } from "redux";
-import { ICurrentUser } from "../../../models/ICurrentUser";
-import { RootState } from "../../Root";
-import { defaultUserDataState } from "../UserDataState";
+import { defaultUserDataState } from "..";
+import { RootState } from "../..";
+import { ICurrentUser } from "../../../../models/ICurrentUser";
 
 interface SetUser {
     type: 'AUTHORIZATION/SET_USER';

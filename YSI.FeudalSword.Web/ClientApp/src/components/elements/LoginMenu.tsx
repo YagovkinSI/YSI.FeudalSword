@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { NavItem, NavLink } from 'reactstrap';
 import { ApplicationState } from '../../store';
-import { navBarActionCreators } from '../../store/UserData/UI/NavBar/NavBarActionCreators';
+import { navBarActionCreators } from '../../store/Root/UserData/UI/NavBar/NavBarActionCreators';
 
 const LoginMenu :  React.FC = () => {  
     const dispatch = useDispatch();   

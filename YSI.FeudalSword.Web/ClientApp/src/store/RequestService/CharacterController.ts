@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { ApplicationState } from "..";
 import { ICheckMyCharacter } from "../../models/ICheckMyCharacter";
 import { IPublicDataApiModel } from "../../models/IPublicDataApiModel";
-import { publicDataActionCreators } from "../PublicData/PublicDataActionCreators";
+import { publicDataActionCreators } from "../Root/PublicData/Base/PublicDataActionCreators";
 import { GetErrorMessage, IResponse } from "./RequestService";
 
 export const get = async (appState: ApplicationState, characterId : number)

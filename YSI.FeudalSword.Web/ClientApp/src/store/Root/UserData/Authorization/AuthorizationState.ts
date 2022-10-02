@@ -1,4 +1,5 @@
-import { ICurrentUser } from "../../../models/ICurrentUser"
+import { ICurrentUser } from "../../../../models/ICurrentUser"
+
 
 export interface AuthorizationState {
     isChecked: boolean,

@@ -9,9 +9,9 @@ import { ApplicationState } from './store';
 import LoginRegister from './components/pages/LoginRegister';
 import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
-import { authorizationActionCreators } from './store/UserData/Authorization/AuthorizationActionCreators';
+import { authorizationActionCreators } from './store/Root/UserData/Authorization/AuthorizationActionCreators';
 import MapPage from './components/pages/MapPage';
-import { userCharacterActionCreators } from './store/UserData/Character/UserCharacterActionCreators';
+import { userCharacterActionCreators } from './store/Root/UserData/Character/UserCharacterActionCreators';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 

@@ -1,7 +1,7 @@
 import { Action } from "redux";
-import { IPublicDataApiModel } from "../../../../../models/IPublicDataApiModel";
-import { publicDataHelper } from "../../../../PublicData/PublicDataHelper";
-import { RootState } from "../../../../Root";
+import { RootState } from "../../../..";
+import { IPublicDataApiModel } from "../../../../../../models/IPublicDataApiModel";
+import { publicDataHelper } from "../../../../PublicData/Base/PublicDataHelper";
 import { enContentType } from "./LeftCanvasState";
 
 interface Close {

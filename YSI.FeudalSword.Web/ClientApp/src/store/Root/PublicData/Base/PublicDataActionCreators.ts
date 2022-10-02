@@ -1,6 +1,6 @@
-import { AppThunkAction } from "..";
-import { IPublicDataApiModel } from "../../models/IPublicDataApiModel";
-import { requestService } from "../RequestService/RequestService";
+import { AppThunkAction } from "../../..";
+import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
+import { requestService } from "../../../RequestService/RequestService";
 import { PublicDataActions } from "./PublicDataReducer";
 
 

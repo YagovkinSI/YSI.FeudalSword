@@ -3,9 +3,9 @@ import { Button, Card, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { enTitleRank } from "../../models/IPublicDataApiModel";
 import { ApplicationState } from "../../store";
-import { publicDataActionCreators } from "../../store/PublicData/PublicDataActionCreators";
-import { characterCardHelper } from "../../store/UserData/UI/MapPage/LeftCanvas/Helpers/CharacterCardHelper";
-import { userCharacterActionCreators } from "../../store/UserData/Character/UserCharacterActionCreators";
+import { publicDataActionCreators } from "../../store/Root/PublicData/Base/PublicDataActionCreators";
+import { characterCardHelper } from "../../store/Root/UserData/UI/MapPage/LeftCanvas/Helpers/CharacterCardHelper";
+import { userCharacterActionCreators } from "../../store/Root/UserData/Character/UserCharacterActionCreators";
 import CardLinkLine, { enCardLinkLineType } from "../elements/CardLinkLine";
 
 const CharacterCard : React.FC = () => {

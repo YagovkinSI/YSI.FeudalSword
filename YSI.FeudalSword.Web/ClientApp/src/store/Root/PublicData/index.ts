@@ -1,6 +1,8 @@
 import { IPublicArmy, IPublicUnit, IPublicDomain, IPublicUser, 
-    IPublicTitle, IPublicCharacter, IPublicDynasty } from "../../models/IPublicDataApiModel"
+    IPublicTitle, IPublicCharacter, IPublicDynasty } from "../../../models/IPublicDataApiModel"
+import { reducerCurrentTurn } from "./CurrentTurn/CurrentTurnReducer"
 import { CurrentTurnState, defaultCurrentTurnState } from "./CurrentTurn/CurrentTurnState"
+import { reducerPublicData } from "./Base/PublicDataReducer"
 
 export interface PublicDataState {
     currentTurn: CurrentTurnState,
@@ -27,4 +29,9 @@ export const defaultPublicDataState : PublicDataState = {
 
     loadings: []
 }
+
+export const publicDataReducers = [
+    reducerCurrentTurn,
+    reducerPublicData
+]
 

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Offcanvas, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApplicationState } from '../../store';
-import { leftCanvasActionCreators } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
-import { enContentType } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasState';
+import { leftCanvasActionCreators } from '../../store/Root/UserData/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
+import { enContentType } from '../../store/Root/UserData/UI/MapPage/LeftCanvas/LeftCanvasState';
 import CharacterCard from '../cards/CharacterCard';
 import DomainCard from '../cards/DomainCard';
 

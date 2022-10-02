@@ -1,19 +1,29 @@
-import * as Root from './Root';
+import { Action, Reducer } from 'redux';
+import { defaultRootState, rootChildReducers, RootState } from './Root';
 
-// The top-level state object
 export interface ApplicationState {
-    root: Root.RootState;
+    root: RootState;
 }
 
-// Whenever an action is dispatched, Redux will update each top-level application state property using
-// the reducer with the matching name. It's important that the names match exactly, and that the reducer
-// acts on the corresponding ApplicationState property type.
-export const reducers = {
-    root: Root.reducer
+export const reducer: Reducer<RootState> = (
+    state: RootState = defaultRootState,
+    action: Action
+): RootState => {
+    let newState : RootState | undefined = undefined;
+    rootChildReducers.forEach(currentReducer  => {
+        if (newState != undefined)
+            return newState;        
+        newState = currentReducer(state, action);
+    });
+    if (newState != undefined)
+        return newState;
+    return state;
 };
 
-// This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
-// correctly typed to match your store.
+export const reducers = {
+    root: reducer
+};
+
 export interface AppThunkAction<TAction> {
     (dispatch: (action: TAction) => void, getState: () => ApplicationState): void;
 }

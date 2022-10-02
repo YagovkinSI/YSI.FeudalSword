@@ -3,9 +3,9 @@ import { Card, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { enTitleRank } from '../../models/IPublicDataApiModel';
 import { ApplicationState } from '../../store';
-import { domainCardHelper } from '../../store/UserData/UI/MapPage/LeftCanvas/Helpers/DomainCardHelper';
-import { leftCanvasActionCreators } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
-import { enContentType } from '../../store/UserData/UI/MapPage/LeftCanvas/LeftCanvasState';
+import { domainCardHelper } from '../../store/Root/UserData/UI/MapPage/LeftCanvas/Helpers/DomainCardHelper';
+import { leftCanvasActionCreators } from '../../store/Root/UserData/UI/MapPage/LeftCanvas/LeftCanvasActionCreators';
+import { enContentType } from '../../store/Root/UserData/UI/MapPage/LeftCanvas/LeftCanvasState';
 import CardLinkLine, { enCardLinkLineType } from '../elements/CardLinkLine';
 
 const DomainCard: React.FC = () => { 

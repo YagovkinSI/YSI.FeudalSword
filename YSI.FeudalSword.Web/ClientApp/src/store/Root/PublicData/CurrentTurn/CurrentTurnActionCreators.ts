@@ -1,7 +1,7 @@
-import { AppThunkAction } from "../..";
+import { AppThunkAction } from "../../..";
 import { CurrentTurnActions } from "./CurrentTurnReducer";
-import { requestService } from "../../RequestService/RequestService";
-import { ICurrentTurn } from "../../../models/ICurrentTurn";
+import { requestService } from "../../../RequestService/RequestService";
+import { ICurrentTurn } from "../../../../models/ICurrentTurn";
 
 const getCurrentTurn = () 
 : AppThunkAction<CurrentTurnActions> => async (dispatch, getState) => {

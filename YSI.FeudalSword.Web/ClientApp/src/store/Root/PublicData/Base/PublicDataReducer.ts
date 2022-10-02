@@ -1,7 +1,6 @@
 import { Action } from "redux";
-import { IPublicDataApiModel } from "../../models/IPublicDataApiModel";
-import { RootState } from "../Root"
-import { CurrentTurnActions, reducerCurrentTurn } from "./CurrentTurn/CurrentTurnReducer";
+import { IPublicDataApiModel } from "../../../../models/IPublicDataApiModel";
+import { RootState } from "../../../Root"
 import { publicDataHelper } from "./PublicDataHelper";
 
 interface LoadData {
@@ -53,8 +52,3 @@ export const reducerPublicData = (state: RootState, incomingAction: Action )
             }
     }  
 }
-
-export const publicDataReducers = [
-    reducerCurrentTurn,
-    reducerPublicData
-]

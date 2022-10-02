@@ -1,11 +1,11 @@
-import { IPublicArmy, IPublicCharacter, IPublicDataApiModel, IPublicDomain, IPublicDynasty, IPublicTitle, IPublicUnit, IPublicUser, ISaga } from "../../models/IPublicDataApiModel"
-import { RootState } from "../Root";
+import { RootState } from "../..";
+import * as ApiModel from "../../../../models/IPublicDataApiModel";
 
-const reset = (appState : RootState, saga : ISaga) => {
+const reset = (appState : RootState, saga : ApiModel.ISaga) => {
     //TODO
 }
 
-const updateDomains = (appState : RootState, array : IPublicDomain[]) => {
+const updateDomains = (appState : RootState, array : ApiModel.IPublicDomain[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.domains.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -19,7 +19,7 @@ const updateDomains = (appState : RootState, array : IPublicDomain[]) => {
     });
 }
 
-const updateTitles = (appState : RootState, array : IPublicTitle[]) => {
+const updateTitles = (appState : RootState, array : ApiModel.IPublicTitle[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.titles.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -31,7 +31,7 @@ const updateTitles = (appState : RootState, array : IPublicTitle[]) => {
     });
 }
 
-const updateArmies = (appState : RootState, array : IPublicArmy[]) => {
+const updateArmies = (appState : RootState, array : ApiModel.IPublicArmy[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.armies.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -43,7 +43,7 @@ const updateArmies = (appState : RootState, array : IPublicArmy[]) => {
     });
 }
 
-const updateCharacters = (appState : RootState, array : IPublicCharacter[]) => {
+const updateCharacters = (appState : RootState, array : ApiModel.IPublicCharacter[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.characters.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -61,7 +61,7 @@ const updateCharacters = (appState : RootState, array : IPublicCharacter[]) => {
     });
 }
 
-const updateDynasties = (appState : RootState, array : IPublicDynasty[]) => {
+const updateDynasties = (appState : RootState, array : ApiModel.IPublicDynasty[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.dynasties.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -73,7 +73,7 @@ const updateDynasties = (appState : RootState, array : IPublicDynasty[]) => {
     });
 }
 
-const updateUnits = (appState : RootState, array : IPublicUnit[]) => {
+const updateUnits = (appState : RootState, array : ApiModel.IPublicUnit[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.units.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -82,7 +82,7 @@ const updateUnits = (appState : RootState, array : IPublicUnit[]) => {
     });
 }
 
-const updateUsers = (appState : RootState, array : IPublicUser[]) => {
+const updateUsers = (appState : RootState, array : ApiModel.IPublicUser[]) => {
     array.forEach(item => {
         let currentItem = appState.publicData.users.find(i => i.id == item.id);
         if (currentItem == undefined) {
@@ -94,7 +94,7 @@ const updateUsers = (appState : RootState, array : IPublicUser[]) => {
     });
 }
 
-const update = (appState : RootState, publicData : IPublicDataApiModel) => {
+const update = (appState : RootState, publicData : ApiModel.IPublicDataApiModel) => {
     if (appState.publicData.currentTurn.id != publicData.saga.turnNumber)
         reset(appState, publicData.saga);
     if (publicData.domains != undefined)

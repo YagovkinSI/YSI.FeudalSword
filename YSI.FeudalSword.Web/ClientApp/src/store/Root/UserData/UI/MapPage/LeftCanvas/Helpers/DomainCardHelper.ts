@@ -1,5 +1,5 @@
-import { IPublicArmy, IPublicDomain, IPublicTitle } from "../../../../../../models/IPublicDataApiModel";
-import { RootState } from "../../../../../Root"
+import { IPublicArmy, IPublicDomain, IPublicTitle } from "../../../../../../../models/IPublicDataApiModel";
+import { RootState } from "../../../../.."
 
 export interface DomainCardData {
     domain: IPublicDomain,

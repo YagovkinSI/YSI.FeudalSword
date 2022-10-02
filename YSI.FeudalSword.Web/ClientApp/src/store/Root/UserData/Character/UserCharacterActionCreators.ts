@@ -1,6 +1,6 @@
-import { AppThunkAction } from "../..";
-import { publicDataActionCreators } from "../../PublicData/PublicDataActionCreators";
-import { requestService } from "../../RequestService/RequestService";
+import { AppThunkAction } from "../../..";
+import { publicDataActionCreators } from "../../PublicData/Base/PublicDataActionCreators";
+import { requestService } from "../../../RequestService/RequestService";
 import { UserCharacterActions } from "./UserCharacterReducer";
 
 const getUserCharacter = ()

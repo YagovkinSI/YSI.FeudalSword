@@ -1,5 +1,5 @@
-import { AppThunkAction } from "../..";
-import { requestService } from "../../RequestService/RequestService";
+import { AppThunkAction } from "../../..";
+import { requestService } from "../../../RequestService/RequestService";
 import { AuthorizationActions } from "./AuthorizationReducer";
 
 const getCurrentUser = ()

@@ -1,5 +1,8 @@
+import { reducerAuthorization } from "./Authorization/AuthorizationReducer"
 import { AuthorizationState, defaultAuthorizationState } from "./Authorization/AuthorizationState"
+import { reducerUserCharacter } from "./Character/UserCharacterReducer"
 import { defaultChatacterState, IUserChatacterState } from "./Character/UserChatacterState"
+import { uiReducers } from "./UI/UiReducer"
 import { defaultUiState, UiState } from "./UI/UiState"
 
 export interface UserDataState {
@@ -13,4 +16,11 @@ export const defaultUserDataState : UserDataState = {
     character: defaultChatacterState,
     ui: defaultUiState
 }
+
+export const userDataReducers = 
+[ 
+    reducerAuthorization, 
+    reducerUserCharacter,
+    ...uiReducers, 
+]
 

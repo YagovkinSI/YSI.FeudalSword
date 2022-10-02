@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { enTitleRank, enUnitType } from "../../models/IPublicDataApiModel";
 import { ApplicationState } from "../../store";
-import { publicDataActionCreators } from "../../store/PublicData/PublicDataActionCreators";
+import { publicDataActionCreators } from "../../store/Root/PublicData/Base/PublicDataActionCreators";
 
 export enum enCardLinkLineType {
     Character = 1,

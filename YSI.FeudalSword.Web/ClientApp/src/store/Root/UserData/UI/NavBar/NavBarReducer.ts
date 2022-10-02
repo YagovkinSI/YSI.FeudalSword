@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { RootState } from "../../../Root";
+import { RootState } from "../../..";
 
 interface Close {
     type: 'UI/NAVBAR/CLOSE'

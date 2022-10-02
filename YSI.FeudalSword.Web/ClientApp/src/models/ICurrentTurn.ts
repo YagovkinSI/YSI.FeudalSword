@@ -1,4 +1,4 @@
-import { enTurnState } from "../store/PublicData/CurrentTurn/CurrentTurnState";
+import { enTurnState } from "../store/Root/PublicData/CurrentTurn/CurrentTurnState";
 
 export interface ICurrentTurn {
     id: number,

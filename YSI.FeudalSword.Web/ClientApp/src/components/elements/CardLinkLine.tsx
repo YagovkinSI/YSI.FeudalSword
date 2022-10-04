@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 import { enTitleRank, enUnitType, IPublicCharacter, IPublicTitle } from "../../models/IPublicDataApiModel";
 import { ApplicationState } from "../../store";
 import { publicDataActionCreators } from "../../store/Root/PublicData/Base/PublicDataActionCreators";
+import { userCommandsActionCreators } from "../../store/Root/UserData/Commads/UserCommandsActionCreators";
 
 export enum enCardLinkLineType {
     Character = 1,
@@ -111,8 +112,7 @@ const CardLinkLine : React.FC<CardLinkLineProp> = (props) => {
     }
 
     const atackDomain = () => {
-        console.log('Заявлена атака доменна ', props.contentId);
-        //dispatch(userCharacterActionCreators.takeCharacter(characterId))
+        dispatch(userCommandsActionCreators.setCommand(props.contentId))
     }
 
     const canAtack = (appState : ApplicationState, title: IPublicTitle | undefined) => {
@@ -126,12 +126,18 @@ const CardLinkLine : React.FC<CardLinkLineProp> = (props) => {
             !character.titlesIds.includes(title.id);
     }
 
+    const isActive = () : boolean => {
+        const isActive = props.contentId == appState.root.userData.commands.targetDomainId;
+        return isActive;
+    }
+
     const buttonAtack = () => {
         return (
             <Button
                 variant="outline-primary"
                 size="sm"
-                onClick= { atackDomain } >
+                onClick = { atackDomain } 
+                active = { isActive() }  >
                 Атаковать
             </Button>
         )  

@@ -15,6 +15,7 @@ namespace YSI.FeudalSword.Web.Database
         public DbSet<Turn> Turns { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<Army> Armies { get; set; }
+        public DbSet<Command> Commands { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
                : base(options)
@@ -33,6 +34,7 @@ namespace YSI.FeudalSword.Web.Database
             CreateTurns(builder);
             CreateUnits(builder);
             CreateArmies(builder);
+            CreateCommands(builder);
 
             PregenearateData(builder);
         }
@@ -157,6 +159,20 @@ namespace YSI.FeudalSword.Web.Database
                 .OnDelete(DeleteBehavior.Cascade);
 
             model.HasIndex(x => x.DayOfTurn);
+        }
+
+        private void CreateCommands(ModelBuilder builder)
+        {
+            var model = builder.Entity<Command>();
+            model.HasKey(x => x.Id);
+
+            model.HasIndex(x => x.CharacterId);
+            model.HasOne(x => x.Character)
+                .WithMany(x => x.Commands)
+                .HasForeignKey(x => x.CharacterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            model.HasIndex(x => new { x.CommandType, x.CommandTargetId });
         }
 
         private void PregenearateData(ModelBuilder builder)

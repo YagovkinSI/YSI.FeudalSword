@@ -6,6 +6,7 @@ namespace YSI.FeudalSword.Web.Database.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int WarrioirCount { get; set; }
 
         public int? DynastyId { get; set; }
         public Dynasty Dynasty { get; set; }
@@ -20,6 +21,8 @@ namespace YSI.FeudalSword.Web.Database.Models
         public List<Title> Titles { get; set; }
         public List<Unit> Units { get; set; }
         public List<Army> Armies { get; set; }
+        public List<Command> Commands { get; set; }
+        
 
         public Character(int id, string name, int? dynastyId = null, int ? suzerainId = null)
         {
@@ -27,6 +30,7 @@ namespace YSI.FeudalSword.Web.Database.Models
             Name = name;
             DynastyId = dynastyId ?? id;
             SuzerainId = suzerainId;
+            WarrioirCount = 3000;
         }
     }
 }

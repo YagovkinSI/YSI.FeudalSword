@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { armyController } from "./ArmyController";
 import { characterController } from "./CharacterController";
+import { commandsController } from "./CommandsController";
 import { domainController } from "./DomainController";
 import { turnController } from "./TurnController";
 import { userController } from "./UserController";
@@ -10,6 +11,7 @@ export const requestService = {
     turnController, 
     domainController, 
     characterController,
+    commandsController,
     armyController 
 };
 

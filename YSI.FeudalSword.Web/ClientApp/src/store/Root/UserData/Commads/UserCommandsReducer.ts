@@ -8,13 +8,41 @@ interface SetTarget {
     targetDomainId: number | undefined
 }
 
-export type UserCommandsActions = SetTarget;
+interface SetBusy {
+    type: 'USER_DATA/COMMANDS/SET_BUSY';
+}
+
+interface SetError {
+    type: 'USER_DATA/COMMANDS/SET_ERROR';
+    error: string
+}
+
+export type UserCommandsActions = SetTarget | SetBusy | SetError;
 
 const setTarget = (localState : IUserCommandsState, action : SetTarget)
 : IUserCommandsState => {
     return {
         ...localState,
         targetDomainId: action.targetDomainId
+    }
+}
+
+const setBusy = (localState : IUserCommandsState, action : SetBusy)
+: IUserCommandsState => {
+    return {
+        ...localState,
+        isBusy: true
+    }
+}
+
+const setError = (localState : IUserCommandsState, action : SetError)
+: IUserCommandsState => {
+    return {
+        ...localState,
+        isChecked: true,
+        isBusy: false,
+        targetDomainId: undefined,
+        error: action.error
     }
 }
 
@@ -30,6 +58,12 @@ export const reducerUserCommands = (state: RootState, incomingAction: Action )
     switch (action.type) {  
         case 'USER_DATA/COMMANDS/SET_TARGET':
             newState.userData.commands = setTarget(localState, action);
+            return newState;
+        case 'USER_DATA/COMMANDS/SET_BUSY':
+            newState.userData.commands =  setBusy(localState, action);
+            return newState;
+        case 'USER_DATA/COMMANDS/SET_ERROR':
+            newState.userData.commands =  setError(localState, action);
             return newState;
         default:
             return undefined;             

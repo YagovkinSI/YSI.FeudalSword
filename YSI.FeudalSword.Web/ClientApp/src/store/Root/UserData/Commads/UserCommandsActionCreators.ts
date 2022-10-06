@@ -5,12 +5,22 @@ import { UserCommandsActions } from "./UserCommandsReducer";
 const setCommand = ( targetDomainId: number )
 : AppThunkAction<UserCommandsActions> => async (dispatch, getState) => {
     const appState = getState();
-    dispatch({
-        type: 'USER_DATA/COMMANDS/SET_TARGET',
-        targetDomainId: targetDomainId == appState.root.userData.commands.targetDomainId
-            ? undefined
-            : targetDomainId
-    })
+    if (appState.root.userData.commands.isBusy)
+        return;
+    dispatch({ type: 'USER_DATA/COMMANDS/SET_BUSY' });
+    const targetDomainIdNullable = targetDomainId == appState.root.userData.commands.targetDomainId
+        ? undefined
+        : targetDomainId
+    const response = await requestService.commandsController.set(appState, targetDomainIdNullable);
+    if (response.success) {
+        dispatch({
+            type: 'USER_DATA/COMMANDS/SET_TARGET',
+            targetDomainId: targetDomainIdNullable
+        })
+    } else {
+        const error = response.error == undefined ? 'Неизвестная ошибка' : response.error;
+        dispatch({ type: 'USER_DATA/COMMANDS/SET_ERROR', error });
+    }
 }
 
 export const userCommandsActionCreators = { setCommand };

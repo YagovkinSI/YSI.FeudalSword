@@ -11,7 +11,7 @@ namespace YSI.FeudalSword.Web.Helpers
         public async static Task<SagaApiModel> GetSaga(ApplicationDbContext context)
         {
             var currentTurn = await context.Turns
-                    .SingleAsync(t => t.Status != Database.Enums.enTurnStatus.IsOver);
+                    .SingleAsync(t => t.Status != Database.Enums.enTurnStatus.TurnIsOver);
             var saga = new SagaApiModel
             {
                 GameVersion = "000.000.001",

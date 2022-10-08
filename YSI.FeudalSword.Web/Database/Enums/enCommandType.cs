@@ -3,6 +3,9 @@
     public enum enCommandType
     {
         WarrioirGathering = 0,
-        CapturingDomain = 10
+        CapturingDomain = 10,
+        Siege = 15,
+
+        IsOver = -1
     }
 }

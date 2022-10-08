@@ -34,7 +34,7 @@ namespace YSI.FeudalSword.Web.Controllers
             try
             {
                 var currentTurn = await _context.Turns
-                    .SingleAsync(t => t.Status != Database.Enums.enTurnStatus.IsOver);
+                    .SingleAsync(t => t.Status != Database.Enums.enTurnStatus.TurnIsOver);
                 return new TurnApiModel(currentTurn);
 
             }
@@ -59,7 +59,7 @@ namespace YSI.FeudalSword.Web.Controllers
                 await finishTurnTask.Execute();
 
                 var currentTurn = await _context.Turns
-                    .SingleAsync(t => t.Status != Database.Enums.enTurnStatus.IsOver);
+                    .SingleAsync(t => t.Status != Database.Enums.enTurnStatus.TurnIsOver);
                 return new TurnApiModel(currentTurn);
             }
             catch (Exception ex)

@@ -23,7 +23,10 @@ const setTarget = (localState : IUserCommandsState, action : SetTarget)
 : IUserCommandsState => {
     return {
         ...localState,
-        targetDomainId: action.targetDomainId
+        targetDomainId: action.targetDomainId,
+        isChecked: true,
+        isBusy: false,
+        error: undefined
     }
 }
 

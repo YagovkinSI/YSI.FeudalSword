@@ -64,8 +64,8 @@ export const reducerAuthorization = (state : RootState, incomingAction : Action)
     let localState = newState.userData.authorization;
     switch (action.type) {  
         case 'AUTHORIZATION/SET_USER':         
-            if (action.user == undefined) 
-                newState.userData = defaultUserDataState;            
+            if (action.user == undefined)
+                newState.userData = { ...defaultUserDataState }; 
             newState.userData.authorization = setUser(localState, action);   
             return newState;
         case 'AUTHORIZATION/SET_BUSY':

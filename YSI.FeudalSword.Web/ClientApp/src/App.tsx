@@ -9,9 +9,8 @@ import { ApplicationState } from './store';
 import LoginRegister from './components/pages/LoginRegister';
 import Logout from './components/pages/Logout';
 import Profile from './components/pages/Profile';
-import { authorizationActionCreators } from './store/Root/UserData/Authorization/AuthorizationActionCreators';
 import MapPage from './components/pages/MapPage';
-import { userCharacterActionCreators } from './store/Root/UserData/Character/UserCharacterActionCreators';
+import { userDataHelper } from './store/Root/UserData/UserDataHelper';
 
 const App: React.FC = () => {
     const dispatch = useDispatch(); 
@@ -22,13 +21,7 @@ const App: React.FC = () => {
         appState.root.userData.authorization.user != undefined;
 
     React.useEffect(() => {
-        if (!appState.root.userData.authorization.isBusy &&
-            !appState.root.userData.authorization.isChecked)
-            dispatch(authorizationActionCreators.getCurrentUser());
-        if (appState.root.userData.authorization.user != undefined &&
-            !appState.root.userData.character.isBusy &&
-            !appState.root.userData.character.isChecked)
-            dispatch(userCharacterActionCreators.getUserCharacter());
+        userDataHelper.checkUserData(appState, dispatch);
     });    
         
     const authorizedPaths = () => {

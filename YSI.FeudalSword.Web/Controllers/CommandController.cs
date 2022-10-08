@@ -80,5 +80,27 @@ namespace YSI.FeudalSword.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getMyCommands")]
+        public async Task<ActionResult<CheckMyCommands>> GetMyCommands()
+        {
+            try
+            {
+                var currentUser = await _userManager.GetUserAsync(_context, HttpContext.User);
+                if (currentUser == null)
+                    return NotFound("Не удалось определить текущего пользователя.");
+
+                var character = _context.Characters
+                    .Include(c => c.Commands)
+                    .FirstOrDefault(c => c.UserId == currentUser.Id);
+
+                return new CheckMyCommands(character.Commands);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message.ToString());
+            }
+        }
     }
 }

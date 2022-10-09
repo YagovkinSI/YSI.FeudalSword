@@ -1,3 +1,4 @@
+import { getDefaultBaseState, IBaseState } from "../Base"
 import { reducerAuthorization } from "./Authorization/AuthorizationReducer"
 import { AuthorizationState, defaultAuthorizationState } from "./Authorization/AuthorizationState"
 import { reducerUserCharacter } from "./Character/UserCharacterReducer"
@@ -10,14 +11,14 @@ import { defaultUiState, UiState } from "./UI"
 export interface UserDataState {
     authorization: AuthorizationState,
     character: IUserChatacterState,  
-    commands: IUserCommandsState,     
+    commands: IBaseState<IUserCommandsState>,     
     ui: UiState
 }
 
 export const defaultUserDataState : UserDataState = {
     authorization: defaultAuthorizationState,
     character: defaultChatacterState,
-    commands: defaultUserCommandsState,
+    commands: getDefaultBaseState(defaultUserCommandsState),
     ui: defaultUiState
 }
 

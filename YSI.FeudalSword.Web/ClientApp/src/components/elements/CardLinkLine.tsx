@@ -127,7 +127,7 @@ const CardLinkLine : React.FC<CardLinkLineProp> = (props) => {
     }
 
     const isActive = () : boolean => {
-        const isActive = props.contentId == appState.root.userData.commands.targetDomainId;
+        const isActive = props.contentId == appState.root.userData.commands.data.targetDomainId;
         return isActive;
     }
 

@@ -56,7 +56,7 @@ const GameStateBar: React.FC = () => {
         if (commandLoaded == false)
             return '';
         
-        const targetDomainId = appState.root.userData.commands.targetDomainId;
+        const targetDomainId = appState.root.userData.commands.data.targetDomainId;
         if (targetDomainId == undefined || targetDomainId == -1)
             return 'Приказ: Набор воинов';
         

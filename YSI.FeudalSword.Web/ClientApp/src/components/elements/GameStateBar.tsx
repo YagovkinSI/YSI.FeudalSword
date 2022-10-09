@@ -51,13 +51,13 @@ const GameStateBar: React.FC = () => {
         if (characterId == undefined)
             return '';
         
-        const commandLoaded = !appState.root.userData.commands.isBusy &&
-            appState.root.userData.commands.isChecked;
+        const commandLoaded = !appState.root.userData.commands.baseState.isBusy &&
+            appState.root.userData.commands.baseState.isChecked;
         if (commandLoaded == false)
             return '';
         
         const targetDomainId = appState.root.userData.commands.targetDomainId;
-        if (targetDomainId == undefined)
+        if (targetDomainId == undefined || targetDomainId == -1)
             return 'Приказ: Набор воинов';
         
         const targetTitle = appState.root.publicData.titles

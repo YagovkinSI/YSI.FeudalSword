@@ -14,8 +14,8 @@ const checkUserData = (appState : ApplicationState, dispatch: Dispatch<any> ) =>
         !appState.root.userData.character.isChecked)
         dispatch(userCharacterActionCreators.getUserCharacter());
     else if (appState.root.userData.character.characterId != undefined &&
-        !appState.root.userData.commands.isBusy &&
-        !appState.root.userData.commands.isChecked)
+        !appState.root.userData.commands.baseState.isBusy &&
+        !appState.root.userData.commands.baseState.isChecked)
         dispatch(userCommandsActionCreators.getUserCommands());
 }
 

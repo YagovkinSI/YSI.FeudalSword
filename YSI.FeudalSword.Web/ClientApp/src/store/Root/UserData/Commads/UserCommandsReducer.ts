@@ -1,51 +1,38 @@
 import { Action } from "redux";
 import { RootState } from "../..";
+import { BaseSetBusy, BaseSetData, BaseSetError, baseStateSetBusy, baseStateSetData, baseStateSetError } from "../../Base";
 import { IUserCommandsState } from "./UserCommandsState";
 
 
-interface SetTarget {
-    type: 'USER_DATA/COMMANDS/SET_TARGET';
-    targetDomainId: number | undefined
-}
+export type UserCommandsActions = 
+    BaseSetData<'USER_DATA/COMMANDS/SET_TARGET', number | undefined> | 
+    BaseSetBusy<'USER_DATA/COMMANDS/SET_BUSY'> | 
+    BaseSetError<'USER_DATA/COMMANDS/SET_ERROR'>;
 
-interface SetBusy {
-    type: 'USER_DATA/COMMANDS/SET_BUSY';
-}
-
-interface SetError {
-    type: 'USER_DATA/COMMANDS/SET_ERROR';
-    error: string
-}
-
-export type UserCommandsActions = SetTarget | SetBusy | SetError;
-
-const setTarget = (localState : IUserCommandsState, action : SetTarget)
+const setTarget = (localState : IUserCommandsState, 
+    action : BaseSetData<'USER_DATA/COMMANDS/SET_TARGET', number | undefined>)
 : IUserCommandsState => {
     return {
         ...localState,
-        targetDomainId: action.targetDomainId,
-        isChecked: true,
-        isBusy: false,
-        error: undefined
+        targetDomainId: action.data,
+        baseState: baseStateSetData(localState.baseState, action.requestId)
     }
 }
 
-const setBusy = (localState : IUserCommandsState, action : SetBusy)
+const setBusy = (localState : IUserCommandsState, action : BaseSetBusy<'USER_DATA/COMMANDS/SET_BUSY'>)
 : IUserCommandsState => {
     return {
         ...localState,
-        isBusy: true
+        baseState: baseStateSetBusy(localState.baseState, action.requestId)
     }
 }
 
-const setError = (localState : IUserCommandsState, action : SetError)
+const setError = (localState : IUserCommandsState, action : BaseSetError<'USER_DATA/COMMANDS/SET_ERROR'>)
 : IUserCommandsState => {
     return {
         ...localState,
-        isChecked: true,
-        isBusy: false,
-        targetDomainId: undefined,
-        error: action.error
+        baseState: baseStateSetError(action.error),
+        targetDomainId: undefined
     }
 }
 

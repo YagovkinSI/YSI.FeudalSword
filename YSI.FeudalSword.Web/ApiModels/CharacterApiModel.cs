@@ -9,6 +9,7 @@ namespace YSI.FeudalSword.Web.ApiModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int WarriorCount { get; set; }
         public int? DynastyId { get; set; }
         public string UserId { get; set; }
         public int? SuzerainId { get; set; }
@@ -22,6 +23,7 @@ namespace YSI.FeudalSword.Web.ApiModels
         {
             Id = character.Id;
             Name = character.Name;
+            WarriorCount = character.WarrioirCount;
             DynastyId = character.DynastyId;
             UserId = character.UserId;
             SuzerainId = character.SuzerainId;

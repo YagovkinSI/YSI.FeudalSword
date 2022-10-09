@@ -73,6 +73,7 @@ export enum enTitleRank {
 export interface IPublicCharacter {
     id : number,
     name : string,
+    warriorCount: number,
     dynastyId : number | undefined,
     userId : string | undefined,
     suzerainId : number | undefined,

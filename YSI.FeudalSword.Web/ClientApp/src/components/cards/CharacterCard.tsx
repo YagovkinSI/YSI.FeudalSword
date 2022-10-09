@@ -68,6 +68,7 @@ const CharacterCard : React.FC = () => {
                         </Button>
                     : <></>
                 }
+                <h6>Кол-во воинов: {state.character.warriorCount}</h6>
                 <h6>Владения:</h6>
                 {state.titles
                     .filter(t => t.rank == enTitleRank.Earl)

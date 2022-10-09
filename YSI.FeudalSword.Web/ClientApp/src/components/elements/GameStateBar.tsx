@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { enTitleRank } from '../../models/IPublicDataApiModel';
 import { ApplicationState } from '../../store';
+import { publicDataActionCreators } from '../../store/Root/PublicData/Base/PublicDataActionCreators';
 import { currentTurnActionCreators } from '../../store/Root/PublicData/CurrentTurn/CurrentTurnActionCreators';
 
 const GameStateBar: React.FC = () => { 
@@ -37,6 +39,37 @@ const GameStateBar: React.FC = () => {
         }
         return `Ход ${currentTurn.id} (${seasonString} ${year} года до Завоевания Эйгона)`;
     }
+
+    const getCommandString = () : string => {
+        const characterId = !appState.root.userData.authorization.isBusy &&
+            appState.root.userData.authorization.isChecked &&
+            appState.root.userData.authorization.user != undefined &&
+            !appState.root.userData.character.isBusy &&
+            appState.root.userData.character.isChecked 
+                ? appState.root.userData.character.characterId
+                : undefined;
+        if (characterId == undefined)
+            return '';
+        
+        const commandLoaded = !appState.root.userData.commands.isBusy &&
+            appState.root.userData.commands.isChecked;
+        if (commandLoaded == false)
+            return '';
+        
+        const targetDomainId = appState.root.userData.commands.targetDomainId;
+        if (targetDomainId == undefined)
+            return 'Приказ: Набор воинов';
+        
+        const targetTitle = appState.root.publicData.titles
+            .find(t => t.rank == enTitleRank.Earl && t.capitalId == targetDomainId);
+        if (targetTitle == undefined)
+        {
+            dispatch(publicDataActionCreators.loadDomain(targetDomainId));
+            return '';
+        }
+
+        return `Приказ: Атака владения ${targetTitle.name}`;
+    }
     
     if (!currentTurn.isChecked || currentTurn.isBusy) {
         return (
@@ -48,7 +81,12 @@ const GameStateBar: React.FC = () => {
     } else {
         return (
             <Alert key='info' variant='info'>
-                {getTurnString()}
+                <div>
+                    {getTurnString()}
+                </div>
+                <div>
+                    {getCommandString()}
+                </div>
             </Alert >
         )
     }
